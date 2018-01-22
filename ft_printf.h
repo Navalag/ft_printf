@@ -47,7 +47,7 @@ t_flags		*g_head;
 
 void		ft_printf(char *fmt, ...);
 int			validate_format(char *frm);
-void		begin_validation(char *frm);
+int			begin_validation(char *frm);
 void		continue_with_width(char *frm, va_list ap);
 void		read_flags_from_format(char *frm, va_list ap);
 char		*ft_strchr(const char *s, int c);
@@ -56,5 +56,6 @@ void		continue_with_size(char *frm, va_list ap);
 void		continue_with_conversions(char *frm, va_list ap);
 char		*set_precision(char *res);
 char		*set_width();
+char		*cast_with_size(va_list ap);
 
 #endif

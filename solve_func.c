@@ -10,67 +10,57 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "ft_printf.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "ft_printf.h"
 
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t			i;
-	unsigned char	*b_copy;
-
-	b_copy = (unsigned char *)b;
-	i = 0;
-	while (i < len)
-	{
-		b_copy[i] = (unsigned char)c;
-		i++;
-	}
-	return (b);
-}
-
-char	*set_precision(char *res, int width, int precision)
+char	*set_precision(char *res)
 {
 	char	*res_prec;
 	int		diff;
 
-	if (width < precision)
+	if (g_head->width < g_head->precision)
 	{
 		free(res);
-		res_prec = (char *)malloc(precision + 1);
-		res_prec = ft_memset(res_prec, '0', precision);
-		res_prec[precision] = '\0';
+		res_prec = (char *)malloc(g_head->precision + 1);
+		res_prec = ft_memset(res_prec, '0', g_head->precision);
+		res_prec[g_head->precision] = '\0';
 		return (res_prec);
 	}
 	else
 	{
-		diff = width - precision;
-		ft_memset(res + diff, '0', precision);
+		diff = g_head->width - g_head->precision;
+		ft_memset(res + diff, '0', g_head->precision);
 	}
 	return (res);
 }
 
-char	*set_width(int width, int precision)
+char	*set_width()
 {
 	char	*res;
 
-	if (width > 0)
+	if (g_head->width > 0)
 	{
-		res = (char *)malloc(width + 1);
-		res = ft_memset(res, ' ', width);
-		res[width] = '\0';
+		res = (char *)malloc(g_head->width + 1);
+		res = ft_memset(res, ' ', g_head->width);
+		res[g_head->width] = '\0';
 	}
-	return (set_precision(res, width, precision));
+	return (set_precision(res));
 }
 
-int		main(void)
+char	*cast_with_size(va_list ap)
 {
-	int		width = 6;
-	int		precision = 3;
-
-	char	*res = set_width(width, precision);
-	printf("%s\n", res);
-	char	*size = "ll";
-	printf("%5.i\n", 123456);
-	// printf("%p\n", size);
+	/* check itoa to work with more than int */
+	if (g_head->size_hh == 1)
+		return (ft_itoa((unsigned char)va_arg(ap, int)));
+	else if (g_head->size_h == 1)
+		return (ft_itoa((short)va_arg(ap, int)));
+	else if (g_head->size_ll == 1)
+		return (ft_itoa(va_arg(ap, long long int)));
+	else if (g_head->size_l == 1)
+		return (ft_itoa(va_arg(ap, long int)));
+	else if (g_head->size_j == 1)
+		return (ft_itoa(va_arg(ap, intmax_t)));
+	else if (g_head->size_z == 1)
+		return (ft_itoa(va_arg(ap, size_t)));
+	else
+		return (ft_itoa(va_arg(ap, int)));
 }

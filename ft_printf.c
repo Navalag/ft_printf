@@ -15,9 +15,9 @@
 void	begin_process(va_list ap, char *frm)
 {
 	char		*sval;
-	int			ival;
+	int			count;
 
-	begin_validation(frm);
+	count = begin_validation(frm);
 	while (*frm)
 	{
 		if (*frm != '%')

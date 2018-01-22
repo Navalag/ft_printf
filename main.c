@@ -14,9 +14,9 @@
 
 int		main(void)
 {
-	ft_printf("Bla Bla %#-10.9d\n", 13234);
-	printf("%.5s\n", "123");
-	printf("%u\n", g_head->size_j);
+	ft_printf("Bla Bla %#10.5d\n", 255);
+	printf("%10.9d\n", 1234567);
+	printf("%D\n", 12);
 
 	return (0);
 }

@@ -14,25 +14,25 @@
 
 void	read_flags_from_format(char *frm, va_list ap)
 {
-	t_flags		*tmp;
+	t_flags		tmp;
 	char		*all_flags;
 
 	all_flags = "#0-+ ";
-	if ((tmp = (t_flags *)malloc(sizeof(*tmp))) == NULL)
-		return ;
-	g_head = tmp;
+	// if ((tmp = (t_flags *)malloc(sizeof(*tmp))) == NULL)
+	// 	return ;
+	g_head = &tmp;
 	while (ft_strchr(all_flags, *frm) != 0)
 	{
 		if (*frm == '#')
-			tmp->flag_hesh = 1;
+			tmp.flag_hesh = 1;
 		else if (*frm == '-')
-			tmp->flag_minus = 1;
+			tmp.flag_minus = 1;
 		else if (*frm == '+')
-			tmp->flag_plus = 1;
+			tmp.flag_plus = 1;
 		else if (*frm == '0')
-			tmp->flag_zero = 1;
+			tmp.flag_zero = 1;
 		else if (*frm == ' ')
-			tmp->flag_space = 1;
+			tmp.flag_space = 1;
 		frm++;
 	}
 	continue_with_width(frm, ap);
@@ -102,7 +102,7 @@ void	continue_with_conversions(char *frm, va_list ap)
 	if ((*frm == 'd' || *frm == 'i') )
 	{
 		res = set_width();
-		ival = ft_itoa(va_arg(ap, int));
+		ival = cast_with_size(ap);
 		if (ft_strlen(res) <= ft_strlen(ival))
 		{
 			free(res);
@@ -110,7 +110,7 @@ void	continue_with_conversions(char *frm, va_list ap)
 		}
 		else
 		{
-			while (ft_strlen(res) > ft_strlen(ival))
+			while (ft_strlen(res) > ft_strlen(ival)) // can be optimized with strlen
 			{
 				ft_putchar(*res);
 				res++;
@@ -122,38 +122,4 @@ void	continue_with_conversions(char *frm, va_list ap)
 			}
 		}
 	}
-}
-
-char	*set_precision(char *res)
-{
-	char	*res_prec;
-	int		diff;
-
-	if (g_head->width < g_head->precision)
-	{
-		free(res);
-		res_prec = (char *)malloc(g_head->precision + 1);
-		res_prec = ft_memset(res_prec, '0', g_head->precision);
-		res_prec[g_head->precision] = '\0';
-		return (res_prec);
-	}
-	else
-	{
-		diff = g_head->width - g_head->precision;
-		ft_memset(res + diff, '0', g_head->precision);
-	}
-	return (res);
-}
-
-char	*set_width()
-{
-	char	*res;
-
-	if (g_head->width > 0)
-	{
-		res = (char *)malloc(g_head->width + 1);
-		res = ft_memset(res, ' ', g_head->width);
-		res[g_head->width] = '\0';
-	}
-	return (set_precision(res));
 }
