@@ -63,27 +63,14 @@ char	*set_width(int width, int precision)
 	return (set_precision(res, width, precision));
 }
 
-int		set_size(int convercision, char *size)
-{
-	if (*size == 'h' && *(size + 1) == 'h')
-		return (short short int)convercision;
-	else if (*size == 'h' && *(size + 1) != 'h')
-		return (short int)convercision;
-	else if (*size == 'l' && *(size + 1) == 'l')
-		return (long long int)convercision;
-	else if (*size == 'l' && *(size + 1) != 'l')
-		return (long int)convercision;
-	return (convercision);
-}
-
 int		main(void)
 {
 	int		width = 6;
-	int		precision = 7;
+	int		precision = 3;
 
 	char	*res = set_width(width, precision);
 	printf("%s\n", res);
-	char	*size = "h";
-	short int		convercision = set_size(123, size);
-	printf("%hi\n", convercision);
+	char	*size = "ll";
+	printf("%5.i\n", 123456);
+	// printf("%p\n", size);
 }

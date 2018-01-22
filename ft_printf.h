@@ -17,37 +17,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include "libft/libft.h"
 
 typedef struct	s_fl
 {
-	unsigned		flag_hesh:1;
-	unsigned		flag_minus:1;
-	unsigned		flag_plus:1;
-	unsigned		flag_zero:1;
-	unsigned		flag_space:1;
-	int				width;
-	int				precision;
-	unsigned		size_hh:1;
-	unsigned		size_h:1;
-	unsigned		size_ll:1;
-	unsigned		size_l:1;
-	unsigned		size_j:1;
-	unsigned		size_z:1;
-
-	unsigned		conv_s:1;
-	unsigned		conv_S:1;
-	unsigned		conv_p:1;
-	unsigned		conv_D:1;
-	unsigned		conv_d:1;
-	unsigned		conv_i:1;
-	unsigned		conv_o:1;
-	unsigned		conv_O:1;
-	unsigned		conv_u:1;
-	unsigned		conv_U:1;
-	unsigned		conv_x:1;
-	unsigned		conv_X:1;
-	unsigned		conv_c:1;
-	unsigned		conv_C:1;
+	unsigned	flag_hesh:1;
+	unsigned	flag_minus:1;
+	unsigned	flag_plus:1;
+	unsigned	flag_zero:1;
+	unsigned	flag_space:1;
+	int			width;
+	int			precision;
+	unsigned	size_hh:1;
+	unsigned	size_h:1;
+	unsigned	size_ll:1;
+	unsigned	size_l:1;
+	unsigned	size_j:1;
+	unsigned	size_z:1;
 }				t_flags;
 
 t_flags		*g_head;
@@ -62,10 +48,13 @@ t_flags		*g_head;
 void		ft_printf(char *fmt, ...);
 int			validate_format(char *frm);
 void		begin_validation(char *frm);
-void		continue_with_width(char *frm);
-void		read_flags_from_format(char *frm);
+void		continue_with_width(char *frm, va_list ap);
+void		read_flags_from_format(char *frm, va_list ap);
 char		*ft_strchr(const char *s, int c);
-void		continue_with_precision(char *frm);
-void		continue_with_size(char *frm);
+void		continue_with_precision(char *frm, va_list ap);
+void		continue_with_size(char *frm, va_list ap);
+void		continue_with_conversions(char *frm, va_list ap);
+char		*set_precision(char *res);
+char		*set_width();
 
 #endif

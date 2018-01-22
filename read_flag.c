@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	read_flags_from_format(char *frm)
+void	read_flags_from_format(char *frm, va_list ap)
 {
 	t_flags		*tmp;
 	char		*all_flags;
@@ -35,10 +35,10 @@ void	read_flags_from_format(char *frm)
 			tmp->flag_space = 1;
 		frm++;
 	}
-	continue_with_width(frm);
+	continue_with_width(frm, ap);
 }
 
-void	continue_with_width(char *frm)
+void	continue_with_width(char *frm, va_list ap)
 {
 	int		res;
 
@@ -49,10 +49,10 @@ void	continue_with_width(char *frm)
 		frm++;
 	}
 	g_head->width = res;
-	continue_with_precision(frm);
+	continue_with_precision(frm, ap);
 }
 
-void	continue_with_precision(char *frm)
+void	continue_with_precision(char *frm, va_list ap)
 {
 	int		res;
 
@@ -67,10 +67,10 @@ void	continue_with_precision(char *frm)
 		}
 	}
 	g_head->precision = res;
-	continue_with_size(frm);	
+	continue_with_size(frm, ap);
 }
 
-void	continue_with_size(char *frm)
+void	continue_with_size(char *frm, va_list ap)
 {
 	char	*all_sizes;
 
@@ -91,10 +91,69 @@ void	continue_with_size(char *frm)
 			g_head->size_z = 1;
 		frm++;
 	}
-	// continue_with_conversion(frm);
+	continue_with_conversions(frm, ap);
 }
 
-// void	continue_with_conversion(char *frm)
-// {
-// 	while ()
-// }
+void	continue_with_conversions(char *frm, va_list ap)
+{
+	char	*res;
+	char	*ival;
+
+	if ((*frm == 'd' || *frm == 'i') )
+	{
+		res = set_width();
+		ival = ft_itoa(va_arg(ap, int));
+		if (ft_strlen(res) <= ft_strlen(ival))
+		{
+			free(res);
+			ft_putstr(ival);
+		}
+		else
+		{
+			while (ft_strlen(res) > ft_strlen(ival))
+			{
+				ft_putchar(*res);
+				res++;
+			}
+			while (*ival)
+			{
+				ft_putchar(*ival);
+				ival++;
+			}
+		}
+	}
+}
+
+char	*set_precision(char *res)
+{
+	char	*res_prec;
+	int		diff;
+
+	if (g_head->width < g_head->precision)
+	{
+		free(res);
+		res_prec = (char *)malloc(g_head->precision + 1);
+		res_prec = ft_memset(res_prec, '0', g_head->precision);
+		res_prec[g_head->precision] = '\0';
+		return (res_prec);
+	}
+	else
+	{
+		diff = g_head->width - g_head->precision;
+		ft_memset(res + diff, '0', g_head->precision);
+	}
+	return (res);
+}
+
+char	*set_width()
+{
+	char	*res;
+
+	if (g_head->width > 0)
+	{
+		res = (char *)malloc(g_head->width + 1);
+		res = ft_memset(res, ' ', g_head->width);
+		res[g_head->width] = '\0';
+	}
+	return (set_precision(res));
+}
