@@ -14,9 +14,9 @@
 
 int		main(void)
 {
-	ft_printf("Bla Bla %#10.5d\n", 255);
-	printf("%10.9d\n", 1234567);
-	printf("%D\n", 12);
+	ft_printf("Bla Bla %10.2X %o %%%5.u\n", 1234, 10, 1);
+	   printf("Bla Bla %10.2X %o %%%5.u\n", 1234, 10, 1);
+	// printf("%D\n", 12);
 
 	return (0);
 }

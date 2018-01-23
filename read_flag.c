@@ -12,15 +12,33 @@
 
 #include "ft_printf.h"
 
-void	read_flags_from_format(char *frm, va_list ap)
+void	clean_flags_struct()
+{
+	g_head->flag_hesh = 0;
+	g_head->flag_minus = 0;
+	g_head->flag_plus = 0;
+	g_head->flag_zero = 0;
+	g_head->flag_space = 0;
+	g_head->width = 0;
+	g_head->precision = 0;
+	g_head->size_hh = 0;
+	g_head->size_h = 0;
+	g_head->size_ll = 0;
+	g_head->size_l = 0;
+	g_head->size_j = 0;
+	g_head->size_z = 0;
+}
+
+int		read_flags_from_format(char *frm, va_list ap)
 {
 	t_flags		tmp;
 	char		*all_flags;
+	int			count;
 
 	all_flags = "#0-+ ";
-	// if ((tmp = (t_flags *)malloc(sizeof(*tmp))) == NULL)
-	// 	return ;
 	g_head = &tmp;
+	count = 0;
+	clean_flags_struct();
 	while (ft_strchr(all_flags, *frm) != 0)
 	{
 		if (*frm == '#')
@@ -34,11 +52,12 @@ void	read_flags_from_format(char *frm, va_list ap)
 		else if (*frm == ' ')
 			tmp.flag_space = 1;
 		frm++;
+		count++;
 	}
-	continue_with_width(frm, ap);
+	return (continue_with_width(frm, ap, count));
 }
 
-void	continue_with_width(char *frm, va_list ap)
+int		continue_with_width(char *frm, va_list ap, int count)
 {
 	int		res;
 
@@ -47,12 +66,13 @@ void	continue_with_width(char *frm, va_list ap)
 	{
 		res = res * 10 + *frm - '0';
 		frm++;
+		count++;
 	}
 	g_head->width = res;
-	continue_with_precision(frm, ap);
+	return (continue_with_precision(frm, ap, count));
 }
 
-void	continue_with_precision(char *frm, va_list ap)
+int		continue_with_precision(char *frm, va_list ap, int count)
 {
 	int		res;
 
@@ -60,17 +80,24 @@ void	continue_with_precision(char *frm, va_list ap)
 	if (*frm == '.')
 	{
 		frm++;
+		count++;
 		while (*frm >= '0' && *frm <= '9')
 		{
 			res = res * 10 + *frm - '0';
 			frm++;
+			count++;
 		}
 	}
 	g_head->precision = res;
-	continue_with_size(frm, ap);
+	return (continue_with_size(frm, ap, count));
 }
 
-void	continue_with_size(char *frm, va_list ap)
+/*
+** later need to add a ficha with more and less important sizes.
+** Check this func later and fix it!!!
+*/
+
+int		continue_with_size(char *frm, va_list ap, int count)
 {
 	char	*all_sizes;
 
@@ -90,36 +117,35 @@ void	continue_with_size(char *frm, va_list ap)
 		else if (*frm == 'z')
 			g_head->size_z = 1;
 		frm++;
+		count++;
 	}
-	continue_with_conversions(frm, ap);
+	return (continue_with_conversions(frm, ap, count));
 }
 
-void	continue_with_conversions(char *frm, va_list ap)
+int		continue_with_conversions(char *frm, va_list ap, int count)
 {
-	char	*res;
-	char	*ival;
+	if (*frm == 'd' || *frm == 'i')
+		print_d_i_conversions(ap);
+	// else if (*frm == 'D')
+	// 	print_D_conversions(ap);
+	else if (*frm == 'u')
+		print_u_U_o_O_x_X_conversion(ap, 10, 0);
+	else if (*frm == 'U')
+		print_u_U_o_O_x_X_conversion(ap, 10, 0);
+	else if (*frm == 'o')
+		print_u_U_o_O_x_X_conversion(ap, 8, 0);
+	else if (*frm == 'O')
+		print_u_U_o_O_x_X_conversion(ap, 8, 0);
+	else if (*frm == 'x')
+		print_u_U_o_O_x_X_conversion(ap, 16, 0);
+	else if (*frm == 'X')
+		print_u_U_o_O_x_X_conversion(ap, 16, 1);
+	// else if (*frm == 'c')
+	// 	print_c_conversion(ap);
+	// else if (*frm == 'C')
+	// 	print_C_conversion(ap);
+	else if (*frm == '%')
+		print_percent_conversion();
 
-	if ((*frm == 'd' || *frm == 'i') )
-	{
-		res = set_width();
-		ival = cast_with_size(ap);
-		if (ft_strlen(res) <= ft_strlen(ival))
-		{
-			free(res);
-			ft_putstr(ival);
-		}
-		else
-		{
-			while (ft_strlen(res) > ft_strlen(ival)) // can be optimized with strlen
-			{
-				ft_putchar(*res);
-				res++;
-			}
-			while (*ival)
-			{
-				ft_putchar(*ival);
-				ival++;
-			}
-		}
-	}
+	return (++count);
 }

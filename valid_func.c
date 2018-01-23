@@ -12,11 +12,10 @@
 
 #include "ft_printf.h"
 
-int		begin_validation(char *frm)
+void	begin_validation(char *frm)
 {
 	int		count;
 
-	count = 0;
 	while (*frm)
 	{
 		if (*frm != '%')
@@ -24,13 +23,11 @@ int		begin_validation(char *frm)
 		else
 		{
 			frm++;
-			if (validate_format(frm) == 0)
+			if ((count = validate_format(frm)) == 0)
 				exit (0);
-			frm++;
-			count++;
+			frm += count;
 		}
 	}
-	return (count);
 }
 
 int		validate_format(char *frm)
@@ -55,6 +52,6 @@ int		validate_format(char *frm)
 	while (ft_strchr(all_sizes, frm[i]) != 0) // check size format (hh - ok, hhh )
 		i++;
 	if (ft_strchr(all_conversions, frm[i]) != 0)
-		return (1);
+		return (++i);
 	return (0);
 }

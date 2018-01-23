@@ -33,34 +33,12 @@ char	*set_precision(char *res)
 	return (res);
 }
 
-char	*set_width()
+char	*set_width(int prec_y_n)
 {
 	char	*res;
 
-	if (g_head->width > 0)
-	{
-		res = (char *)malloc(g_head->width + 1);
-		res = ft_memset(res, ' ', g_head->width);
-		res[g_head->width] = '\0';
-	}
-	return (set_precision(res));
-}
-
-char	*cast_with_size(va_list ap)
-{
-	/* check itoa to work with more than int */
-	if (g_head->size_hh == 1)
-		return (ft_itoa((unsigned char)va_arg(ap, int)));
-	else if (g_head->size_h == 1)
-		return (ft_itoa((short)va_arg(ap, int)));
-	else if (g_head->size_ll == 1)
-		return (ft_itoa(va_arg(ap, long long int)));
-	else if (g_head->size_l == 1)
-		return (ft_itoa(va_arg(ap, long int)));
-	else if (g_head->size_j == 1)
-		return (ft_itoa(va_arg(ap, intmax_t)));
-	else if (g_head->size_z == 1)
-		return (ft_itoa(va_arg(ap, size_t)));
-	else
-		return (ft_itoa(va_arg(ap, int)));
+	res = (char *)malloc(g_head->width + 1);
+	res = ft_memset(res, ' ', g_head->width);
+	res[g_head->width] = '\0';
+	return ((prec_y_n) ? set_precision(res) : res);
 }

@@ -38,24 +38,29 @@ typedef struct	s_fl
 
 t_flags		*g_head;
 
-// typedef struct	s_all_flags
-// {
-// 	char	*all_flags = "#0-+ ";
-// 	char	*all_sizes = "hljz";
-// 	char	*all_conversions = "sSpdDioOuUxXcC%";
-// }				t_all_flags;
-
 void		ft_printf(char *fmt, ...);
+
 int			validate_format(char *frm);
-int			begin_validation(char *frm);
-void		continue_with_width(char *frm, va_list ap);
-void		read_flags_from_format(char *frm, va_list ap);
-char		*ft_strchr(const char *s, int c);
-void		continue_with_precision(char *frm, va_list ap);
-void		continue_with_size(char *frm, va_list ap);
-void		continue_with_conversions(char *frm, va_list ap);
+void		begin_validation(char *frm);
+
+void		clean_flags_struct();
+int			read_flags_from_format(char *frm, va_list ap);
+int			continue_with_width(char *frm, va_list ap, int count);
+int			continue_with_precision(char *frm, va_list ap, int count);
+int			continue_with_size(char *frm, va_list ap, int count);
+int			continue_with_conversions(char *frm, va_list ap, int count);
+
+void		print_d_i_conversions(va_list ap);
+void		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case);
+void		print_percent_conversion();
+
 char		*set_precision(char *res);
-char		*set_width();
-char		*cast_with_size(va_list ap);
+char		*set_width(int prec_y_n);
+
+char		*cast_d_i_size(va_list ap);
+char		*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case);
+
+char		*itoa_base_unsign(size_t nb, int base, int upper_case);
+char		*itoa_base_sign(long long int nb);
 
 #endif

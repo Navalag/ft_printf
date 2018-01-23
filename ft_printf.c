@@ -12,38 +12,43 @@
 
 #include "ft_printf.h"
 
+	// printf("%i\n", count);
+	// if (*frm == 'd')
+	// {
+	// 	ival = (short)va_arg(ap, int);
+	// 	ft_putnbr(ival);
+	// }
+	// else if (*frm == 's')
+	// {
+	// 	sval = va_arg(ap, char *);
+	// 	while (*sval)
+	// 	{
+	// 		ft_putchar(*sval);
+	// 		sval++;
+	// 	}
+	// }
+	// else
+		// ft_putchar(*frm);
+
 void	begin_process(va_list ap, char *frm)
 {
 	char		*sval;
 	int			count;
 
-	count = begin_validation(frm);
+	begin_validation(frm);
 	while (*frm)
 	{
 		if (*frm != '%')
+		{
 			ft_putchar(*frm);
+			frm++;
+		}
 		else
 		{
 			frm++;
-			read_flags_from_format(frm, ap);
-			// if (*frm == 'd')
-			// {
-			// 	ival = (short)va_arg(ap, int);
-			// 	ft_putnbr(ival);
-			// }
-			// else if (*frm == 's')
-			// {
-			// 	sval = va_arg(ap, char *);
-			// 	while (*sval)
-			// 	{
-			// 		ft_putchar(*sval);
-			// 		sval++;
-			// 	}
-			// }
-			// else
-				// ft_putchar(*frm);
+			count = read_flags_from_format(frm, ap);
+			frm += count;
 		}
-		frm++;
 	}
 }
 
