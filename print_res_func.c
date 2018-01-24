@@ -68,6 +68,167 @@ void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 	}
 }
 
+void	print_s_conversion(va_list ap)
+{
+	char	*res;
+	char	*s_val;
+
+	res = set_width(0);
+	s_val = cast_s_size(ap);
+	if (ft_strlen(res) <= ft_strlen(s_val))
+	{
+		free(res);
+		if (g_head->precision_flag)
+		{
+			while (*s_val && g_head->precision >= 0)
+			{
+				ft_putchar(*s_val);
+				g_head->precision--;
+				s_val++;
+			}
+		}
+		else
+			while (*s_val)
+			{
+				ft_putchar(*s_val);
+				s_val++;
+			}
+	}
+	else
+		print_s_continue(s_val, res);
+}
+
+void	print_s_continue(char *s_val, char *res)
+{
+	int		res_len;
+	int		s_val_len;
+
+	res_len = ft_strlen(res);
+	s_val_len = ft_strlen(s_val);
+	if (g_head->precision_flag)
+	{
+		while (res_len > g_head->precision)
+		{
+			ft_putchar(*res);
+			res++;
+			res_len--;
+		}
+		while (*s_val && g_head->precision > 0)
+		{
+			ft_putchar(*s_val);
+			g_head->precision--;
+			s_val++;
+		}
+	}
+	else
+	{
+		while (res_len > s_val_len)
+		{
+			ft_putchar(*res);
+			res++;
+			res_len--;
+		}
+		while (*s_val && s_val_len > 0)
+		{
+			ft_putchar(*s_val);
+			s_val_len--;
+			s_val++;
+		}
+	}
+}
+
+void	print_c_conversion(va_list ap)
+{
+	char	*res;
+	char	c_val;
+
+	res = set_width(0);
+	c_val = cast_c_size(ap);
+	if (ft_strlen(res) <= 1)
+	{
+		free(res);
+		ft_putchar(c_val);
+	}
+	else
+	{
+		while (ft_strlen(res) > 1) // can be optimized with strlen
+		{
+			ft_putchar(*res);
+			res++;
+		}
+		ft_putchar(c_val);
+	}
+}
+
+void	print_S_conversion(va_list ap)
+{
+	char		*res;
+	wchar_t		*S_val;
+
+	res = set_width(0);
+	S_val = cast_S_size(ap);
+	if (ft_strlen(res) <= ft_strlen(S_val))
+	{
+		free(res);
+		if (g_head->precision_flag)
+		{
+			while (*S_val && g_head->precision >= 0)
+			{
+				print_unicode(*S_val);
+				g_head->precision--;
+				S_val++;
+			}
+		}
+		else
+			while (*S_val)
+			{
+				print_unicode(*S_val);
+				S_val++;
+			}
+	}
+	else
+		print_S_continue(S_val, res);
+}
+
+void	print_S_continue(char *S_val, char *res)
+{
+	int		res_len;
+	int		S_val_len;
+
+	res_len = ft_strlen(res);
+	S_val_len = ft_strlen(s_val);
+	if (g_head->precision_flag)
+	{
+		while (res_len > g_head->precision)
+		{
+			print_unicode(*res);
+			res++;
+			res_len--;
+		}
+		while (*S_val && g_head->precision > 0)
+		{
+			print_unicode(*S_val);
+			g_head->precision--;
+			S_val++;
+		}
+	}
+	else
+	{
+		while (res_len > S_val_len)
+		{
+			print_unicode(*res);
+			res++;
+			res_len--;
+		}
+		while (*S_val && S_val_len > 0)
+		{
+			print_unicode(*S_val);
+			S_val_len--;
+			S_val++;
+		}
+	}
+}
+
 /* check res without width later! */
 
 void	print_percent_conversion()

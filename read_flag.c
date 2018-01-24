@@ -21,6 +21,7 @@ void	clean_flags_struct()
 	g_head->flag_space = 0;
 	g_head->width = 0;
 	g_head->precision = 0;
+	g_head->precision_flag = 0;
 	g_head->size_hh = 0;
 	g_head->size_h = 0;
 	g_head->size_ll = 0;
@@ -81,6 +82,7 @@ int		continue_with_precision(char *frm, va_list ap, int count)
 	{
 		frm++;
 		count++;
+		g_head->precision_flag = 1;
 		while (*frm >= '0' && *frm <= '9')
 		{
 			res = res * 10 + *frm - '0';
@@ -140,8 +142,12 @@ int		continue_with_conversions(char *frm, va_list ap, int count)
 		print_u_U_o_O_x_X_conversion(ap, 16, 0);
 	else if (*frm == 'X')
 		print_u_U_o_O_x_X_conversion(ap, 16, 1);
-	// else if (*frm == 'c')
-	// 	print_c_conversion(ap);
+	else if (*frm == 's')
+		print_s_conversion(ap);
+	else if (*frm == 'S')
+		print_S_conversion(ap);
+	else if (*frm == 'c')
+		print_c_conversion(ap);
 	// else if (*frm == 'C')
 	// 	print_C_conversion(ap);
 	else if (*frm == '%')

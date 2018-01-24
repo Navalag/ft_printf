@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <wchar.h>
+# include <locale.h>
 # include "libft/libft.h"
 
 typedef struct	s_fl
@@ -28,6 +30,7 @@ typedef struct	s_fl
 	unsigned	flag_space:1;
 	int			width;
 	int			precision;
+	unsigned	precision_flag:1;
 	unsigned	size_hh:1;
 	unsigned	size_h:1;
 	unsigned	size_ll:1;
@@ -52,13 +55,18 @@ int			continue_with_conversions(char *frm, va_list ap, int count);
 
 void		print_d_i_conversions(va_list ap);
 void		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case);
+void		print_s_conversion(va_list ap);
+void		print_s_continue(char *s_val, char *res);
+void		print_c_conversion(va_list ap);
 void		print_percent_conversion();
 
-char		*set_precision(char *res);
+char		*set_int_precision(char *res);
 char		*set_width(int prec_y_n);
 
 char		*cast_d_i_size(va_list ap);
 char		*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case);
+char		*cast_s_size(va_list ap);
+char		cast_c_size(va_list ap);
 
 char		*itoa_base_unsign(size_t nb, int base, int upper_case);
 char		*itoa_base_sign(long long int nb);

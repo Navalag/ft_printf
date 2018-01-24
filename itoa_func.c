@@ -107,7 +107,7 @@ char			*itoa_base_sign(long long int nb)
 // {
 // 	char	*nb;
 
-// 	nb = itoa_base_unsign(100, 2, 1);
+// 	nb = itoa_base_sign(1);
 // 	printf("%s\n", nb);
 // 	return (0);
 // }

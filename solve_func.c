@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*set_precision(char *res)
+char	*set_int_precision(char *res)
 {
 	char	*res_prec;
 	int		diff;
@@ -40,5 +40,5 @@ char	*set_width(int prec_y_n)
 	res = (char *)malloc(g_head->width + 1);
 	res = ft_memset(res, ' ', g_head->width);
 	res[g_head->width] = '\0';
-	return ((prec_y_n) ? set_precision(res) : res);
+	return ((prec_y_n) ? set_int_precision(res) : res);
 }

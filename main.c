@@ -14,8 +14,8 @@
 
 int		main(void)
 {
-	ft_printf("Bla Bla %10.2X %o %%%5.u\n", 1234, 10, 1);
-	   printf("Bla Bla %10.2X %o %%%5.u\n", 1234, 10, 1);
+	ft_printf("Bla Bla %10.2X %o %%%5.u\n%.5s\n%c\n", 1234, 10, 1, "Hello World !", 43);
+	   printf("Bla Bla %10.2X %o %%%5.u\n%.5s\n%c\n", 1234, 10, 1, "Hello World !", 43);
 	// printf("%D\n", 12);
 
 	return (0);

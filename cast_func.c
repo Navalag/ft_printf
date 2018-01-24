@@ -49,3 +49,18 @@ char	*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case)
 	else
 		return (itoa_base_unsign(va_arg(ap, unsigned int), base, up_case));
 }
+
+char	*cast_s_size(va_list ap)
+{
+	return (va_arg(ap, char *));
+}
+
+char	*cast_S_size(va_list ap)
+{
+	return (va_arg(ap, wchar_t *));
+}
+
+char	cast_c_size(va_list ap)
+{
+	return ((unsigned char)va_arg(ap, int));
+}
