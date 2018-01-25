@@ -28,6 +28,7 @@ void	clean_flags_struct()
 	g_head->size_l = 0;
 	g_head->size_j = 0;
 	g_head->size_z = 0;
+	g_head->conver_letter = 0;
 }
 
 int		read_flags_from_format(char *frm, va_list ap)
@@ -148,10 +149,10 @@ int		continue_with_conversions(char *frm, va_list ap, int count)
 		print_S_conversion(ap);
 	else if (*frm == 'c')
 		print_c_conversion(ap);
-	// else if (*frm == 'C')
-	// 	print_C_conversion(ap);
+	else if (*frm == 'C')
+		print_C_conversion(ap);
 	else if (*frm == '%')
 		print_percent_conversion();
-
+	g_head->conver_letter = *frm;
 	return (++count);
 }

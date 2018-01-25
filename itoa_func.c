@@ -36,7 +36,7 @@
 // 	return (res);
 // }
 
-static	int		ft_intlen(size_t nb, int base)
+int		ft_intlen(size_t nb, int base)
 {
 	int		len;
 
@@ -51,7 +51,7 @@ static	int		ft_intlen(size_t nb, int base)
 	return (len);
 }
 
-char			*itoa_base_unsign(size_t nb, int base, int upper_case)
+char	*itoa_base_unsign(size_t nb, int base, int upper_case)
 {
 	char		*res;
 	int			len;
@@ -74,7 +74,7 @@ char			*itoa_base_unsign(size_t nb, int base, int upper_case)
 	return (res);
 }
 
-char			*itoa_base_sign(long long int nb)
+char	*itoa_base_sign(long long int nb)
 {
 	char		*res;
 	size_t		len;

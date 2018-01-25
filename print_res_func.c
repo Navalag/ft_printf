@@ -160,55 +160,46 @@ void	print_c_conversion(va_list ap)
 	}
 }
 
+void	print_C_conversion(va_list ap)
+{
+	char		*res;
+	wchar_t		C_val;
+
+	res = set_width(0);
+	C_val = cast_C_size(ap);
+	if (ft_strlen(res) <= 1)
+	{
+		free(res);
+		print_unicode((unsigned int)C_val);
+	}
+	else
+	{
+		while (ft_strlen(res) > 1) // can be optimized with strlen
+		{
+			ft_putchar(*res);
+			res++;
+		}
+		print_unicode((unsigned int)C_val);
+	}
+}
+
 void	print_S_conversion(va_list ap)
 {
 	char		*res;
 	wchar_t		*S_val;
+	int			res_len;
+	int			S_val_len;
 
 	res = set_width(0);
 	S_val = cast_S_size(ap);
-	if (ft_strlen(res) <= ft_strlen(S_val))
+	res_len = ft_strlen(res);
+	S_val_len = ft_intlen((size_t)S_val, 10);
+	if (res_len <= S_val_len)
 	{
 		free(res);
-		if (g_head->precision_flag)
+		while (*S_val)
 		{
-			while (*S_val && g_head->precision >= 0)
-			{
-				print_unicode(*S_val);
-				g_head->precision--;
-				S_val++;
-			}
-		}
-		else
-			while (*S_val)
-			{
-				print_unicode(*S_val);
-				S_val++;
-			}
-	}
-	else
-		print_S_continue(S_val, res);
-}
-
-void	print_S_continue(char *S_val, char *res)
-{
-	int		res_len;
-	int		S_val_len;
-
-	res_len = ft_strlen(res);
-	S_val_len = ft_strlen(s_val);
-	if (g_head->precision_flag)
-	{
-		while (res_len > g_head->precision)
-		{
-			print_unicode(*res);
-			res++;
-			res_len--;
-		}
-		while (*S_val && g_head->precision > 0)
-		{
-			print_unicode(*S_val);
-			g_head->precision--;
+			print_unicode((unsigned int)*S_val);
 			S_val++;
 		}
 	}
@@ -216,14 +207,13 @@ void	print_S_continue(char *S_val, char *res)
 	{
 		while (res_len > S_val_len)
 		{
-			print_unicode(*res);
+			ft_putchar(*res);
 			res++;
 			res_len--;
 		}
-		while (*S_val && S_val_len > 0)
+		while (*S_val)
 		{
-			print_unicode(*S_val);
-			S_val_len--;
+			print_unicode((unsigned int)*S_val);
 			S_val++;
 		}
 	}

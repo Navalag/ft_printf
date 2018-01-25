@@ -37,6 +37,7 @@ typedef struct	s_fl
 	unsigned	size_l:1;
 	unsigned	size_j:1;
 	unsigned	size_z:1;
+	char		conver_letter:1;
 }				t_flags;
 
 t_flags		*g_head;
@@ -57,7 +58,9 @@ void		print_d_i_conversions(va_list ap);
 void		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case);
 void		print_s_conversion(va_list ap);
 void		print_s_continue(char *s_val, char *res);
+void		print_S_conversion(va_list ap);
 void		print_c_conversion(va_list ap);
+void		print_C_conversion(va_list ap);
 void		print_percent_conversion();
 
 char		*set_int_precision(char *res);
@@ -66,9 +69,18 @@ char		*set_width(int prec_y_n);
 char		*cast_d_i_size(va_list ap);
 char		*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case);
 char		*cast_s_size(va_list ap);
+wchar_t		*cast_S_size(va_list ap);
 char		cast_c_size(va_list ap);
+wchar_t		cast_C_size(va_list ap);
 
 char		*itoa_base_unsign(size_t nb, int base, int upper_case);
 char		*itoa_base_sign(long long int nb);
+int			ft_intlen(size_t nb, int base);
+
+int			find_bin_size(unsigned int val);
+void		continue_with_2_bytes(unsigned int S_val);
+void		continue_with_3_bytes(unsigned int S_val);
+void		continue_with_4_bytes(unsigned int S_val);
+void		print_unicode(unsigned int S_val);
 
 #endif

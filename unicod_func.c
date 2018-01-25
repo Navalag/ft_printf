@@ -14,7 +14,8 @@
 ** 0xxxxxxx
 ** 110xxxxx 10xxxxxx
 ** 1110xxxx 10xxxxxx 10xxxxxx
-** 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+** 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx		0000000000000000 0110 001000 010001 - 25105
+**											000000000000000000000 10000  000111 - 1031
 */
 
 // #include "ft_printh.h"
@@ -25,90 +26,83 @@
 
 int		find_bin_size(unsigned int val)
 {
-	unsigned int	j;
 	int				count;
 
-	val = val & 121585471;  //  0000 0111  0011 1111  0011 1111  0011 1111
-	j = 134217728;  //  0000 1000  0000 0000  0000 0000  0000 0000
-	count = 21;
-	while (j >>= 1)
-	{
-		if (j & val)
-			return (count);
-		if (j & 121585471)
-			count--;
-	}
-	return (0);
+	count = 1;
+	while (val >>= 1)
+		count++;
+	return (count);
 }
 
-void	continue_with_2_bytes(wchar_t *S_val)
+void	continue_with_2_bytes(unsigned int S_val)
 {
-	unsigned char	o1;
 	unsigned char	o2;
+	unsigned char	o1;
 	unsigned char	octet;
 	unsigned int 	mask; // check and fix it later
 
 	mask = 49280;
-	o1 = (*S_val << 26) >> 26;
-	o2 = ((*S_val >> 6) << 26) >> 27;
-	octet = (mask >> 8) | o2;
+	o2 = (S_val << 26) >> 26; // 7
+	o1 = ((S_val >> 6) << 27) >> 27; // 16
+	octet = (mask >> 8) | o1;
 	write(1, &octet, 1);
-	octet = ((mask << 24) >> 24) | o1;
+	octet = ((mask << 24) >> 24) | o2;
 	write(1, &octet, 1);
 }
 
-void	continue_with_3_bytes(wchar_t *S_val)
+void	continue_with_3_bytes(unsigned int S_val)
 {
-	unsigned char	o1;
-	unsigned char	o2;
 	unsigned char	o3;
+	unsigned char	o2;
+	unsigned char	o1;
 	unsigned char	octet;
 	unsigned int 	mask; // check and fix it later
 
 	mask = 14712960;
-	o1 = (*S_val << 26) >> 26;
-	o2 = ((*S_val >> 6) << 26) >> 26;
-	o3 = ((*S_val >> 12) << 28) >> 28;
-	octet = (mask >> 16) | o3;
+	o3 = (S_val << 26) >> 26; // 17
+	o2 = ((S_val >> 6) << 26) >> 26; // 8
+	o1 = ((S_val >> 12) << 28) >> 28; // 6
+	octet = (mask >> 16) | o1;
 	write(1, &octet, 1);
 	octet = ((mask << 16) >> 24) | o2;
 	write(1, &octet, 1);
-	octet = ((mask << 24) >> 24) | o1;
+	octet = ((mask << 24) >> 24) | o3;
 	write(1, &octet, 1);
 }
 
-void	continue_with_4_bytes(wchar_t *S_val)
+void	continue_with_4_bytes(unsigned int S_val)
 {
-	unsigned char	o1;
-	unsigned char	o2;
-	unsigned char	o3;
 	unsigned char	o4;
+	unsigned char	o3;
+	unsigned char	o2;
+	unsigned char	o1;
 	unsigned char	octet;
 	unsigned int 	mask; // check and fix it later
 
 	mask = 4034953344;
-	o1 = (*S_val << 26) >> 26;
-	o2 = ((*S_val >> 6) << 26) >> 26;
-	o3 = ((*S_val >> 12) << 26) >> 26;
-	o4 = ((*S_val >> 18) << 29) >> 29;
-	octet = (mask >> 24) | o4;
+	o4 = (S_val << 26) >> 26;
+	o3 = ((S_val >> 6) << 26) >> 26;
+	o2 = ((S_val >> 12) << 26) >> 26;
+	o1 = ((S_val >> 18) << 29) >> 29;
+	octet = (mask >> 24) | o1;
 	write(1, &octet, 1);
-	octet = ((mask << 8) >> 24) | o3;
+	octet = ((mask << 8) >> 24) | o2;
 	write(1, &octet, 1);
-	octet = ((mask << 16) >> 24) | o2;
+	octet = ((mask << 16) >> 24) | o3;
 	write(1, &octet, 1);
-	octet = ((mask << 24) >> 24) | o1;
+	octet = ((mask << 24) >> 24) | o4;
 	write(1, &octet, 1);
 }
 
-void	print_unicode(wchar_t *S_val)
+void	print_unicode(unsigned int S_val)
 {
 	int		size;
+	setlocale(LC_ALL, "en_US.UTF-8");
+	// int		i;
 
-
-	while (*S_val)
-	{
-		size = find_bin_size(*S_val);
+	// while (S_val[i] != 0)
+	// {
+		size = find_bin_size(S_val);
 		if (size <= 7)
 			write(1, &S_val, 1);
 		else if (size <= 11)
@@ -117,14 +111,26 @@ void	print_unicode(wchar_t *S_val)
 			continue_with_3_bytes(S_val);
 		else
 			continue_with_4_bytes(S_val);
-		S_val++;
-	}
+		// i++;
+	// }
 }
 
-int		main(void)
-{
-	setlocale(LC_ALL, "en_US.UTF-8");
-	// printf("%i\n", find_bin_size(187179572));
-	print_unicode(L'ЇЇЇ');
-	return (0);
-}
+// void	print_bits_2(unsigned int octet)
+// {
+// 	size_t	i;
+
+// 	i = 4294967296;
+// 	while (i >>= 1)
+// 		(octet & i) ? write(1, "1", 1) : write(1, "0", 1);
+// }
+
+// int		main(void)
+// {
+// 	setlocale(LC_ALL, "en_US.UTF-8");
+// 	// printf("%i\n", find_bin_size(100));
+// 	wchar_t *value = L"ЇїЇ абабагаламага";
+// 	wchar_t *value2 = L"我是一只猫。";
+// 	// print_bits_2(value);
+// 	print_unicode((unsigned int *)value2);
+// 	return (0);
+// }

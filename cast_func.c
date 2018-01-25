@@ -55,7 +55,7 @@ char	*cast_s_size(va_list ap)
 	return (va_arg(ap, char *));
 }
 
-char	*cast_S_size(va_list ap)
+wchar_t	*cast_S_size(va_list ap)
 {
 	return (va_arg(ap, wchar_t *));
 }
@@ -63,4 +63,9 @@ char	*cast_S_size(va_list ap)
 char	cast_c_size(va_list ap)
 {
 	return ((unsigned char)va_arg(ap, int));
+}
+
+wchar_t	cast_C_size(va_list ap)
+{
+	return (va_arg(ap, wchar_t));
 }
