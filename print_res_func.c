@@ -16,29 +16,59 @@
 
 void	print_d_i_conversions(va_list ap)
 {
+	char	*width;
+	char	*value;
 	char	*res;
-	char	*ival;
+	int		width_len;
+	int		value_len;
+	int		i;
 
-	res = set_width(1);
-	ival = cast_d_i_size(ap);
-	if (ft_strlen(res) <= ft_strlen(ival))
+	width = set_width(1);
+	value = cast_d_i_size(ap);
+	width_len = ft_strlen(width);
+	value_len = ft_strlen(value);
+	i = 0;
+	if (width_len <= value_len)
 	{
-		free(res);
-		ft_putstr(ival);
+		free(width);
+		res = value;
 	}
 	else
 	{
-		while (ft_strlen(res) > ft_strlen(ival)) // can be optimized with strlen
+		while (value_len && value[value_len - 1] != '-')
+			width[--width_len] = value[--value_len];
+		while (width[i] && width[i] == ' ' && width[i + 1] == ' ')
+			i++;
+		if (value[0] == '-')
 		{
-			ft_putchar(*res);
-			res++;
+			width[i] = '-';
+			res = width;
 		}
-		while (*ival)
-		{
-			ft_putchar(*ival);
-			ival++;
-		}
+		else if (value[0] == '-')
+			res = ft_strjoin("-", width);
+		else
+			res = width;
 	}
+	res = set_flag_for_d_i(res);
+
+	// if (ft_strlen(res) <= ft_strlen(ival))
+	// {
+	// 	free(res);
+	// 	ft_putstr(ival);
+	// }
+	// else
+	// {
+	// 	while (ft_strlen(res) > ft_strlen(ival)) // can be optimized with strlen
+	// 	{
+	// 		ft_putchar(*res);
+	// 		res++;
+	// 	}
+	// 	while (*ival)
+	// 	{
+	// 		ft_putchar(*ival);
+	// 		ival++;
+	// 	}
+	// }
 }
 
 void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)

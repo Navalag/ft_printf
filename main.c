@@ -19,10 +19,10 @@ int		main(void)
 	wchar_t *value2 = L"我是一只猫。";
 	wchar_t value3 = L'我';
 	ft_printf("Bla Bla %#10.2x\n", 1234);
-	   printf("Bla Bla %+010i\n", 1234);
+	   printf("Bla Bla % 010i\n", 1234);
 	
 
-	printf("%####-----++++S %##s \n", 12);
+	printf("%-3.4d\n", -123);
 
 	return (0);
 }
