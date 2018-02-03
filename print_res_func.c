@@ -12,25 +12,19 @@
 
 #include "ft_printf.h"
 
-/* manage liks with ival */
-
-void	print_d_i_conversions(va_list ap)
+char	*generate_res_str(char *width, char *value)
 {
-	char	*width;
-	char	*value;
 	char	*res;
 	int		width_len;
 	int		value_len;
 	int		i;
 
-	width = set_width(1);
-	value = cast_d_i_size(ap);
 	width_len = ft_strlen(width);
 	value_len = ft_strlen(value);
 	i = 0;
 	if (width_len <= value_len)
 	{
-		free(width);
+		// free(width);
 		res = value;
 	}
 	else
@@ -39,64 +33,75 @@ void	print_d_i_conversions(va_list ap)
 			width[--width_len] = value[--value_len];
 		while (width[i] && width[i] == ' ' && width[i + 1] == ' ')
 			i++;
-		if (value[0] == '-')
+		if (width[i] == ' ' && value[0] == '-')
 		{
 			width[i] = '-';
 			res = width;
 		}
-		else if (value[0] == '-')
+		else if (width[i] != ' ' && value[0] == '-')
 			res = ft_strjoin("-", width);
 		else
 			res = width;
 	}
-	res = set_flag_for_d_i(res);
+	return (res);
+}
 
-	// if (ft_strlen(res) <= ft_strlen(ival))
-	// {
-	// 	free(res);
-	// 	ft_putstr(ival);
-	// }
-	// else
-	// {
-	// 	while (ft_strlen(res) > ft_strlen(ival)) // can be optimized with strlen
-	// 	{
-	// 		ft_putchar(*res);
-	// 		res++;
-	// 	}
-	// 	while (*ival)
-	// 	{
-	// 		ft_putchar(*ival);
-	// 		ival++;
-	// 	}
-	// }
+/* manage liks with ival */
+
+void	print_d_i_conversions(va_list ap)
+{
+	char	*width;
+	char	*value;
+	char	*res;
+	int		res_len;
+
+	width = set_width(1);
+	value = cast_d_i_size(ap);
+	res = set_flag_for_d_i_u(generate_res_str(width, value));
+	res_len = ft_strlen(res);
+	ft_putstr(res);
 }
 
 void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 {
+	char	*width;
+	char	*value;
 	char	*res;
-	char	*u_val;
+	int		res_len;
 
-	res = set_width(1);
-	u_val = cast_u_U_o_O_x_X_size(ap, base, up_case);
-	if (ft_strlen(res) <= ft_strlen(u_val))
-	{
-		free(res);
-		ft_putstr(u_val);
-	}
-	else
-	{
-		while (ft_strlen(res) > ft_strlen(u_val)) // can be optimized with strlen
-		{
-			ft_putchar(*res);
-			res++;
-		}
-		while (*u_val)
-		{
-			ft_putchar(*u_val);
-			u_val++;
-		}
-	}
+	width = set_width(1);
+	value = cast_u_U_o_O_x_X_size(ap, base, up_case);
+	res = set_flag_for_o_x_X(generate_res_str(width, value));
+	res_len = ft_strlen(res);
+	ft_putstr(res);
 }
+
+// void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
+// {
+// 	char	*res;
+// 	char	*u_val;
+
+// 	res = set_width(1);
+// 	u_val = cast_u_U_o_O_x_X_size(ap, base, up_case);
+// 	if (ft_strlen(res) <= ft_strlen(u_val))
+// 	{
+// 		free(res);
+// 		ft_putstr(u_val);
+// 	}
+// 	else
+// 	{
+// 		while (ft_strlen(res) > ft_strlen(u_val)) // can be optimized with strlen
+// 		{
+// 			ft_putchar(*res);
+// 			res++;
+// 		}
+// 		while (*u_val)
+// 		{
+// 			ft_putchar(*u_val);
+// 			u_val++;
+// 		}
+// 	}
+// }
 
 void	print_s_conversion(va_list ap)
 {
