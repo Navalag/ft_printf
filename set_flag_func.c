@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
-// #include "libft/libft.h"
 #include "ft_printf.h"
 
 char	*set_flag_for_d_i_u(char *res)
@@ -23,30 +21,79 @@ char	*set_flag_for_d_i_u(char *res)
 	if (g_head->width > 0)
 	{
 		if (g_head->flag_minus == 1)
+		{
 			res = set_minus_flag(res);
+			g_head->flag_zero = 0;
+		}
 		else if (g_head->flag_zero == 1 && g_head->precision_flag == 0)
 			res = set_zero_flag(res);
+		else
+			g_head->flag_zero = 0;
 	}
 	return (res);
 }
 
 char	*set_flag_for_o_x_X(char *res)
 {
+	if (g_head->flag_minus == 1 || g_head->precision_flag == 1)
+		g_head->flag_zero = 0;
+	if (g_head->flag_hesh == 1 && g_head->conver_letter == 'o') // check conver_letter
+		res = set_hesh_flag_for_octal(res);
+	else if (g_head->flag_hesh == 1 && g_head->conver_letter == 'x')
+		res = set_hesh_flag_for_hexadecimal_x(res);
+	else if (g_head->flag_hesh == 1 && g_head->conver_letter == 'X')
+		res = set_hesh_flag_for_hexadecimal_X(res);
 	if (g_head->width > 0)
 	{
 		if (g_head->flag_minus == 1)
 			res = set_minus_flag(res);
-		else if (g_head->flag_zero == 1 && g_head->precision_flag == 0)
+		else if (g_head->flag_zero == 1)
 			res = set_zero_flag(res);
 	}
-	if (g_head->flag_hesh == 1)// && g_head->conver_letter == 'o') // check conver_letter
-	{
-
-		res = set_hesh_flag_for_octal(res);
-	}
-	// else if (g_head->flag_hesh == 1 && g_head->conver_letter == 'x')
-	// 	res = set_hesh_flag_for_hexadecimal(res);
 	return (res);
+}
+
+char	*set_flag_for_s(char *res)
+{
+	/* necessary for this implemenation (see set_minus_flag function) */
+	g_head->flag_space = 0;
+	if (g_head->width > 0)
+	{
+		if (g_head->flag_minus == 1)
+			res = set_minus_flag(res);
+		else if (g_head->flag_zero == 1)
+			res = set_zero_flag_for_s(res);
+	}
+	return (res);
+}
+
+int		set_flag_for_c(char *width, char value, int width_len, int i)
+{
+	if (width_len <= 1)
+	{
+		ft_putchar(value);
+		return (1);
+	}
+	else
+	{
+		if (g_head->flag_minus == 1)
+		{
+			ft_putchar(value);
+			ft_putstr(width + 1);
+		}
+		else if (g_head->flag_zero == 1)
+		{
+			while (width_len - 1 > i++)
+				ft_putchar('0');
+			ft_putchar(value);
+		}
+		else
+		{
+			ft_putstr(width + 1);
+			ft_putchar(value);
+		}
+	}
+	return (width_len);
 }
 
 char	*set_hesh_flag_for_octal(char *res)
@@ -70,35 +117,87 @@ char	*set_hesh_flag_for_octal(char *res)
 	return (res);
 }
 
-// char	*set_hesh_flag_for_hexadecimal(char *res)
-// {
-// 	int		i;
-// 	char	*tmp;
+char	*set_hesh_flag_for_hexadecimal_x(char *res)
+{
+	int		i;
+	char	*tmp;
 
-// 	i = 0;
-// 	while (res[i] == ' ')
-// 		i++;
-// 	if (i >= 2)
-// 	{
-// 		if (g_head->conver_letter == 'x')
-// 			res[i - 1] = 'x';
-// 		else if (g_head->conver_letter == 'X')
-// 			res[i] = 'X';
-// 		res[i - 2] = '0';
-// 	}
-// 	else if (res[i] == '0' && res[i + 1] == '0' && g_head->flag_zero == 1)
-// 	{
-// 		if (g_head->conver_letter == 'x')
-// 			res[i - 1] = 'x';
-// 		else if (g_head->conver_letter == 'X')
-// 			res[i] = 'X';
-// 		res[i - 2] = '0';
-// 	}
-// 	else
-// 	{
+	i = 0;
+	while (res[i] == ' ' || (g_head->flag_zero == 1 && res[i] == '0'))
+		i++;
+	if (i >= 2)
+	{
+		while (res[i - 1] == '0' && i > 0)
+			i--;
+		/* this condition works for 'space' cases. When we put 0x close
+		   to the number. */
+		if (i >= 2)
+		{
+			res[i - 1] = 'x';
+			res[i - 2] = '0';
+		}
+		/* this condition works for 'zero' cases. Before it
+		   while loop would always return 'i' at the beginning of the string */
+		else
+		{
+			res[i + 1] = 'x';
+			res[i] = '0';
+		}
+	}
+	else if (i == 1)
+	{
+		res[0] = 'x';
+		tmp = ft_strjoin("0", res);
+		free(res);
+		res = tmp;
+	}
+	else
+	{
+		tmp = ft_strjoin("0x", res);
+		free(res);
+		res = tmp;
+	}
+	return (res);
+}
 
-// 	}
-// }
+char	*set_hesh_flag_for_hexadecimal_X(char *res)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (res[i] == ' ' || (g_head->flag_zero == 1 && res[i] == '0'))
+		i++;
+	if (i >= 2)
+	{
+		while (res[i - 1] == '0' && i > 0)
+			i--;
+		if (i >= 1)
+		{
+			res[i - 1] = 'X';
+			res[i - 2] = '0';
+		}
+		else
+		{
+			res[i + 1] = 'X';
+			res[i] = '0';
+		}
+	}
+	else if (i == 1)
+	{
+		res[0] = 'X';
+		tmp = ft_strjoin("0", res);
+		free(res);
+		res = tmp;
+	}
+	else
+	{
+		tmp = ft_strjoin("0X", res);
+		free(res);
+		res = tmp;
+	}
+	return (res);
+}
 
 /* check if value can be with "+" sign */
 
@@ -171,16 +270,11 @@ char	*set_zero_flag(char *res)
 	else if ((tmp = ft_strchr(res, '-')) == NULL && g_head->flag_space == 1 &&
 			g_head->flag_plus == 0)
 		i++;
-	else if ((tmp = ft_strchr(res, '-')) != NULL)
+	else if ((tmp = ft_strchr(res, '-')) != NULL ||
+			(tmp = ft_strchr(res, '+')) != NULL)
 	{
+		res[0] = (*tmp == '-') ? '-' : '+';
 		*tmp = '0';
-		res[0] = '-';
-		i++;
-	}
-	else if ((tmp = ft_strchr(res, '+')) != NULL)
-	{
-		*tmp = '0';
-		res[0] = '+';
 		i++;
 	}
 	while (res[i] == ' ')
@@ -188,18 +282,15 @@ char	*set_zero_flag(char *res)
 	return (res);
 }
 
-// int		main(void)
-// {
-// 	char	width[] = "      00000";
-// 	char	value[] = "-1234";
-// 	int		width_len = ft_strlen(width);
-// 	int		value_len = ft_strlen(value);
-// 	char	*res;
+char	*set_zero_flag_for_s(char *res)
+{
+	int		i;
+	char	*tmp;
 
-// 	res = NULL;
-// 	res = set_space_flag(width, value, res, width_len, value_len);
-// 	printf("%s\n", res);
-// 	res = set_minus_flag(width, value, res, width_len, value_len);
-// 	printf("%s\n", res);
-// 	return (0);
-// }
+	i = 0;
+	if (res[i] != ' ')
+		return (res);
+	while (res[i] == ' ')
+		res[i++] = '0';
+	return (res);
+}

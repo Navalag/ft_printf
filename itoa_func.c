@@ -11,30 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-// #include <stdio.h>
-// #include <stdlib.h>
-
-// char	*ft_strdup(const char *s1)
-// {
-// 	int		len;
-// 	int		i;
-// 	char	*res;
-
-// 	len = 0;
-// 	i = 0;
-// 	while (s1[len] != '\0')
-// 		len++;
-// 	res = (char*)malloc(sizeof(char) * (len + 1));
-// 	if (res == NULL)
-// 		return (NULL);
-// 	while (s1[i] != '\0')
-// 	{
-// 		res[i] = s1[i];
-// 		i++;
-// 	}
-// 	res[i] = '\0';
-// 	return (res);
-// }
 
 int		ft_intlen(size_t nb, int base)
 {
@@ -102,12 +78,3 @@ char	*itoa_base_sign(long long int nb)
 	}
 	return (res);
 }
-
-// int 	main(void)
-// {
-// 	char	*nb;
-
-// 	nb = itoa_base_sign(1);
-// 	printf("%s\n", nb);
-// 	return (0);
-// }

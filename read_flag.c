@@ -127,17 +127,12 @@ int		continue_with_size(char *frm, va_list ap, int count)
 
 int		continue_with_conversions(char *frm, va_list ap, int count)
 {
-	if (*frm == 'd' || *frm == 'i')
-		print_d_i_conversions(ap);
-	// else if (*frm == 'D')
-	// 	print_D_conversions(ap);
-	else if (*frm == 'u')
+	g_head->conver_letter = *frm;
+	if (*frm == 'd' || *frm == 'i' || *frm == 'D')
+		print_D_d_i_conversions(ap);
+	else if (*frm == 'u' || *frm == 'U')
 		print_u_U_o_O_x_X_conversion(ap, 10, 0);
-	else if (*frm == 'U')
-		print_u_U_o_O_x_X_conversion(ap, 10, 0);
-	else if (*frm == 'o')
-		print_u_U_o_O_x_X_conversion(ap, 8, 0);
-	else if (*frm == 'O')
+	else if (*frm == 'o' || *frm == 'O')
 		print_u_U_o_O_x_X_conversion(ap, 8, 0);
 	else if (*frm == 'x')
 		print_u_U_o_O_x_X_conversion(ap, 16, 0);
@@ -153,6 +148,5 @@ int		continue_with_conversions(char *frm, va_list ap, int count)
 		print_C_conversion(ap);
 	else if (*frm == '%')
 		print_percent_conversion();
-	g_head->conver_letter = *frm;
 	return (++count);
 }

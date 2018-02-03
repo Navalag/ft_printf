@@ -23,10 +23,7 @@ char	*generate_res_str(char *width, char *value)
 	value_len = ft_strlen(value);
 	i = 0;
 	if (width_len <= value_len)
-	{
-		// free(width);
 		res = value;
-	}
 	else
 	{
 		while (value_len && value[value_len - 1] != '-')
@@ -46,9 +43,42 @@ char	*generate_res_str(char *width, char *value)
 	return (res);
 }
 
+char	*generate_res_str_for_s(char *width, char *value)
+{
+	char	*res;
+	int		width_len;
+	int		value_len;
+	int		i;
+
+	width_len = ft_strlen(width);
+	value_len = ft_strlen(value);
+	i = 0;
+	if (width_len <= value_len)
+	{
+		if (g_head->precision >= value_len)
+			res = value;
+		else
+			res = ft_strncpy(value, value, g_head->precision);
+	}
+	else
+	{
+		while (width_len > value_len || width_len > g_head->precision)
+		{
+			i++;
+			width_len--;
+		}
+		if (g_head->precision_flag == 1)
+			ft_strncpy(width + i, value, g_head->precision);
+		else
+			ft_strcpy(width + i, value);
+		res = width;
+	}
+	return (res);
+}
+
 /* manage liks with ival */
 
-void	print_d_i_conversions(va_list ap)
+void	print_D_d_i_conversions(va_list ap)
 {
 	char	*width;
 	char	*value;
@@ -56,7 +86,7 @@ void	print_d_i_conversions(va_list ap)
 	int		res_len;
 
 	width = set_width(1);
-	value = cast_d_i_size(ap);
+	value = cast_D_d_i_size(ap);
 	res = set_flag_for_d_i_u(generate_res_str(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
@@ -76,123 +106,32 @@ void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 	ft_putstr(res);
 }
 
-// void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
-// {
-// 	char	*res;
-// 	char	*u_val;
-
-// 	res = set_width(1);
-// 	u_val = cast_u_U_o_O_x_X_size(ap, base, up_case);
-// 	if (ft_strlen(res) <= ft_strlen(u_val))
-// 	{
-// 		free(res);
-// 		ft_putstr(u_val);
-// 	}
-// 	else
-// 	{
-// 		while (ft_strlen(res) > ft_strlen(u_val)) // can be optimized with strlen
-// 		{
-// 			ft_putchar(*res);
-// 			res++;
-// 		}
-// 		while (*u_val)
-// 		{
-// 			ft_putchar(*u_val);
-// 			u_val++;
-// 		}
-// 	}
-// }
-
 void	print_s_conversion(va_list ap)
 {
+	char	*width;
+	char	*value;
 	char	*res;
-	char	*s_val;
-
-	res = set_width(0);
-	s_val = cast_s_size(ap);
-	if (ft_strlen(res) <= ft_strlen(s_val))
-	{
-		free(res);
-		if (g_head->precision_flag)
-		{
-			while (*s_val && g_head->precision >= 0)
-			{
-				ft_putchar(*s_val);
-				g_head->precision--;
-				s_val++;
-			}
-		}
-		else
-			while (*s_val)
-			{
-				ft_putchar(*s_val);
-				s_val++;
-			}
-	}
-	else
-		print_s_continue(s_val, res);
-}
-
-void	print_s_continue(char *s_val, char *res)
-{
 	int		res_len;
-	int		s_val_len;
 
+	width = set_width(0);
+	value = cast_s_size(ap);
+	res = set_flag_for_s(generate_res_str_for_s(width, value));
 	res_len = ft_strlen(res);
-	s_val_len = ft_strlen(s_val);
-	if (g_head->precision_flag)
-	{
-		while (res_len > g_head->precision)
-		{
-			ft_putchar(*res);
-			res++;
-			res_len--;
-		}
-		while (*s_val && g_head->precision > 0)
-		{
-			ft_putchar(*s_val);
-			g_head->precision--;
-			s_val++;
-		}
-	}
-	else
-	{
-		while (res_len > s_val_len)
-		{
-			ft_putchar(*res);
-			res++;
-			res_len--;
-		}
-		while (*s_val && s_val_len > 0)
-		{
-			ft_putchar(*s_val);
-			s_val_len--;
-			s_val++;
-		}
-	}
+	ft_putstr(res);
 }
 
 void	print_c_conversion(va_list ap)
 {
-	char	*res;
-	char	c_val;
+	char	*width;
+	char	value;
+	int		width_len;
+	int		res_len;
 
-	res = set_width(0);
-	c_val = cast_c_size(ap);
-	if (ft_strlen(res) <= 1)
-	{
-		free(res);
-		ft_putchar(c_val);
-	}
-	else
-	{
-		while (ft_strlen(res) > 1) // can be optimized with strlen
-		{
-			ft_putchar(*res);
-			res++;
-		}
-		ft_putchar(c_val);
-	}
+	width = set_width(0);
+	value = cast_c_size(ap);
+	width_len = ft_strlen(width);
+	res_len = set_flag_for_c(width, value, width_len, 0);
+	printf("\n%i\n", res_len);
 }
 
 void	print_C_conversion(va_list ap)

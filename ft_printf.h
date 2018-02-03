@@ -37,7 +37,7 @@ typedef struct	s_fl
 	unsigned	size_l:1;
 	unsigned	size_j:1;
 	unsigned	size_z:1;
-	char		conver_letter:1;
+	char		conver_letter;
 }				t_flags;
 
 t_flags		*g_head;
@@ -54,10 +54,11 @@ int			continue_with_precision(char *frm, va_list ap, int count);
 int			continue_with_size(char *frm, va_list ap, int count);
 int			continue_with_conversions(char *frm, va_list ap, int count);
 
-void		print_d_i_conversions(va_list ap);
+void		print_D_d_i_conversions(va_list ap);
+char		*generate_res_str(char *width, char *value);
+char		*generate_res_str_for_s(char *width, char *value);
 void		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case);
 void		print_s_conversion(va_list ap);
-void		print_s_continue(char *s_val, char *res);
 void		print_S_conversion(va_list ap);
 void		print_c_conversion(va_list ap);
 void		print_C_conversion(va_list ap);
@@ -66,7 +67,7 @@ void		print_percent_conversion();
 char		*set_int_precision(char *res);
 char		*set_width(int prec_y_n);
 
-char		*cast_d_i_size(va_list ap);
+char		*cast_D_d_i_size(va_list ap);
 char		*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case);
 char		*cast_s_size(va_list ap);
 wchar_t		*cast_S_size(va_list ap);
@@ -82,5 +83,18 @@ void		continue_with_2_bytes(unsigned int S_val);
 void		continue_with_3_bytes(unsigned int S_val);
 void		continue_with_4_bytes(unsigned int S_val);
 void		print_unicode(unsigned int S_val);
+
+char		*set_flag_for_d_i_u(char *res);
+char		*set_flag_for_o_x_X(char *res);
+char		*set_flag_for_s(char *res);
+int			set_flag_for_c(char *width, char value, int width_len, int i);
+char		*set_plus_flag(char *res);
+char		*set_space_flag(char *res);
+char		*set_minus_flag(char *res);
+char		*set_zero_flag(char *res);
+char		*set_zero_flag_for_s(char *res);
+char		*set_hesh_flag_for_octal(char *res);
+char		*set_hesh_flag_for_hexadecimal_x(char *res);
+char		*set_hesh_flag_for_hexadecimal_X(char *res);
 
 #endif
