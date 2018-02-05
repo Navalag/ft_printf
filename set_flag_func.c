@@ -67,6 +67,20 @@ char	*set_flag_for_s(char *res)
 	return (res);
 }
 
+wchar_t	*set_flag_for_utf(wchar_t *res)
+{
+	/* necessary for this implemenation (see set_minus_flag function) */
+	g_head->flag_space = 0;
+	if (g_head->width > 0)
+	{
+		if (g_head->flag_minus == 1)
+			res = (wchar_t *)set_minus_flag((char *)res);
+		else if (g_head->flag_zero == 1)
+			res = (wchar_t *)set_zero_flag_for_s((char *)res);
+	}
+	return (res);
+}
+
 int		set_flag_for_c(char *width, char value, int width_len, int i)
 {
 	if (width_len <= 1)

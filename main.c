@@ -10,19 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// #include <stdio.h>
+// #include <locale.h>
+// #include <wchar.h>
 #include "ft_printf.h"
 
 int		main(void)
 {
 	// setlocale(LC_ALL, "");
-	wchar_t *value = L"ЇїЇ абабагаламага";
+	wchar_t *value = L"ЇЇЇ";
 	wchar_t *value2 = L"我是一只猫。";
 	wchar_t value3 = L'我';
-	ft_printf("Bla Bla %#10.2x\n", 1234);
-	   printf("Bla Bla % 010i\n", 1234);
+	printf("%c\n", 170);
+	printf("%C\n", 170);
+setlocale(LC_ALL, "");
+	printf("%c\n", 170);
+	printf("%C\n", 170);
+	fflush(stdout);
+	// char *str = L"我是一只猫";
+	ft_printf("Bla Bla %S\n", L"我是一只猫。");
+	   printf("Bla Bla %S\n", L"我是一只猫。");
+
+	   // printf("Bla Bla %#05x\n", 123);
 	
 
-	printf("%-3.4d\n", -123);
+	// printf("%####-----++++S %##s \n", 12);
 
 	return (0);
 }

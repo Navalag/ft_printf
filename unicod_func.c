@@ -97,7 +97,7 @@ void	continue_with_4_bytes(unsigned int S_val)
 void	print_unicode(unsigned int S_val)
 {
 	int		size;
-	setlocale(LC_ALL, "en_US.UTF-8");
+	// setlocale(LC_ALL, "en_US.UTF-8");
 	// int		i;
 
 	// while (S_val[i] != 0)
