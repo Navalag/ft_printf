@@ -37,7 +37,7 @@ char	*set_flag_for_o_x_X(char *res)
 {
 	if (g_head->flag_minus == 1 || g_head->precision_flag == 1)
 		g_head->flag_zero = 0;
-	if (g_head->flag_hesh == 1 && g_head->conver_letter == 'o') // check conver_letter
+	if (g_head->flag_hesh == 1 && g_head->conver_letter == 'o')
 		res = set_hesh_flag_for_octal(res);
 	else if (g_head->flag_hesh == 1 && g_head->conver_letter == 'x')
 		res = set_hesh_flag_for_hexadecimal_x(res);
@@ -63,20 +63,6 @@ char	*set_flag_for_s(char *res)
 			res = set_minus_flag(res);
 		else if (g_head->flag_zero == 1)
 			res = set_zero_flag_for_s(res);
-	}
-	return (res);
-}
-
-wchar_t	*set_flag_for_utf(wchar_t *res)
-{
-	/* necessary for this implemenation (see set_minus_flag function) */
-	g_head->flag_space = 0;
-	if (g_head->width > 0)
-	{
-		if (g_head->flag_minus == 1)
-			res = (wchar_t *)set_minus_flag((char *)res);
-		else if (g_head->flag_zero == 1)
-			res = (wchar_t *)set_zero_flag_for_s((char *)res);
 	}
 	return (res);
 }

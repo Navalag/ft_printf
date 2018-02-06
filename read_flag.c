@@ -122,31 +122,33 @@ int		continue_with_size(char *frm, va_list ap, int count)
 		frm++;
 		count++;
 	}
-	return (continue_with_conversions(frm, ap, count));
+	return (count);
 }
 
 int		continue_with_conversions(char *frm, va_list ap, int count)
 {
+	int		res_count;
+
 	g_head->conver_letter = *frm;
 	if (*frm == 'd' || *frm == 'i' || *frm == 'D')
-		print_D_d_i_conversions(ap);
+		res_count = print_D_d_i_conversions(ap);
 	else if (*frm == 'u' || *frm == 'U')
-		print_u_U_o_O_x_X_conversion(ap, 10, 0);
+		res_count = print_u_U_o_O_x_X_conversion(ap, 10, 0);
 	else if (*frm == 'o' || *frm == 'O')
-		print_u_U_o_O_x_X_conversion(ap, 8, 0);
+		res_count = print_u_U_o_O_x_X_conversion(ap, 8, 0);
 	else if (*frm == 'x')
-		print_u_U_o_O_x_X_conversion(ap, 16, 0);
+		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 0);
 	else if (*frm == 'X')
-		print_u_U_o_O_x_X_conversion(ap, 16, 1);
+		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 1);
 	else if (*frm == 's')
-		print_s_conversion(ap);
+		res_count = print_s_conversion(ap);
 	else if (*frm == 'S')
-		print_S_conversion(ap);
+		res_count = print_S_conversion(ap);
 	else if (*frm == 'c')
-		print_c_conversion(ap);
+		res_count = print_c_conversion(ap);
 	else if (*frm == 'C')
-		print_C_conversion(ap);
+		res_count = print_C_conversion(ap);
 	else if (*frm == '%')
-		print_percent_conversion();
-	return (++count);
+		res_count = print_percent_conversion();
+	return (res_count);
 }

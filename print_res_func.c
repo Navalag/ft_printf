@@ -98,78 +98,75 @@ int		ft_utf_strlen(wchar_t *value)
 	return (len);
 }
 
-wchar_t	*ft_utf_strcpy(wchar_t *dst, const wchar_t *src)
+int		generate_and_print_utf_str(char *width, wchar_t *value)
 {
-	int i;
+	int		width_len;
+	int		value_len;
 
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = 0;
-	return (dst);
-}
-
-wchar_t	*ft_utf_strncpy(wchar_t *dst, const wchar_t *src, size_t len)
-{
-	while (len-- > 0)
-	{
-		if (*src)
-		{
-			*dst = *src;
-			dst++;
-			src++;
-		}
-		else
-		{
-			*dst = 0;
-			dst++;
-		}
-	}
-	printf("%S\n", dst);
-	return (dst);
-}
-
-wchar_t	*generate_res_for_utf(wchar_t *width, wchar_t *value)
-{
-	wchar_t	*res;
-	int				width_len;
-	int				value_len;
-	int				i;
-
-	width_len = ft_utf_strlen(width);
-	printf("%i\n", width_len);
+	width_len = ft_strlen(width);
 	value_len = ft_utf_strlen(value);
-	printf("%i\n", value_len);
-	i = 0;
 	if (width_len <= value_len)
+		while (*value)
+			print_unicode((unsigned int)*value++);
+	else if (g_head->flag_minus == 1)
 	{
-		if (g_head->precision >= value_len)
-			res = value;
-		else
-			res = ft_utf_strncpy(value, value, g_head->precision);
+		while (*value)
+			print_unicode((unsigned int)*value++);
+		while (width_len-- > value_len)
+			ft_putchar(' ');
 	}
 	else
 	{
-		while (width_len > value_len || width_len > g_head->precision)
-		{
-			i++;
-			width_len--;
-		}
-		if (g_head->precision_flag == 1)
-			ft_utf_strncpy(width + i, value, g_head->precision);
-		else
-			ft_utf_strcpy(width + i, value);
-		res = width;
+		while (width_len-- > value_len)
+			ft_putchar(' ');
+		while (*value)
+			print_unicode((unsigned int)*value++);
 	}
-	return (res);
+	return ((width_len <= value_len) ? value_len : width_len);
+}
+
+int		ft_utf_charlen(wchar_t value)
+{
+	int		bin_len;
+
+	bin_len = find_bin_size(value);
+	if (bin_len <= 7)
+		return (1);
+	else if (bin_len <= 11)
+		return (2);
+	else if (bin_len <= 16)
+		return (3);
+	else
+		return (4);
+}
+
+int		generate_and_print_utf_char(char *width, wchar_t value)
+{
+	int		width_len;
+	int		value_len;
+
+	width_len = ft_strlen(width);
+	value_len = ft_utf_charlen(value);
+	if (width_len <= value_len)
+		print_unicode((unsigned int)value);
+	else if (g_head->flag_minus == 1)
+	{
+		print_unicode((unsigned int)value);
+		while (width_len-- > value_len)
+			ft_putchar(' ');
+	}
+	else
+	{
+		while (width_len-- > value_len)
+			ft_putchar(' ');
+		print_unicode((unsigned int)value);
+	}
+	return ((width_len <= value_len) ? value_len : width_len);
 }
 
 /* manage liks with ival */
 
-void	print_D_d_i_conversions(va_list ap)
+int		print_D_d_i_conversions(va_list ap)
 {
 	char	*width;
 	char	*value;
@@ -181,9 +178,10 @@ void	print_D_d_i_conversions(va_list ap)
 	res = set_flag_for_d_i_u(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	return (res_len);
 }
 
-void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
+int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 {
 	char	*width;
 	char	*value;
@@ -195,9 +193,10 @@ void	print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	return (res_len);
 }
 
-void	print_s_conversion(va_list ap)
+int		print_s_conversion(va_list ap)
 {
 	char	*width;
 	char	*value;
@@ -209,57 +208,22 @@ void	print_s_conversion(va_list ap)
 	res = set_flag_for_s(generate_res_for_str(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	return (res_len);
 }
 
-void	print_S_conversion(va_list ap)
+int		print_S_conversion(va_list ap)
 {
 	char			*width;
 	wchar_t			*value;
-	wchar_t			*res;
 	int				res_len;
 
 	width = set_width(0);
 	value = cast_S_size(ap);
-	res = set_flag_for_utf(generate_res_for_utf((wchar_t *)width, (wchar_t *)value));
-	res_len = ft_strlen((char *) res);
-	// printf("%S\n", (wchar_t *)res);
-	// while ((char)*res == ' ' || (char)*res == '0')
-	// {
-	// 	ft_putchar((char)*res);
-	// 	res++;
-	// }
-	// printf("%S\n", (wchar_t *)res);
-	while (*res)
-	{
-		print_unicode((unsigned int)*res);
-		res++;
-	}
-	// if (width_len <= value_len)
-	// {
-	// 	free(width);
-	// 	while (*value)
-	// 	{
-	// 		print_unicode((unsigned int)*value);
-	// 		value++;
-	// 	}
-	// }
-	// else
-	// {
-	// 	while (width_len > value_len)
-	// 	{
-	// 		ft_putchar(*width);
-	// 		width++;
-	// 		width_len--;
-	// 	}
-	// 	while (*value)
-	// 	{
-	// 		print_unicode((unsigned int)*value);
-	// 		value++;
-	// 	}
-	// }
+	res_len = generate_and_print_utf_str(width, value);
+	return (res_len);
 }
 
-void	print_c_conversion(va_list ap)
+int		print_c_conversion(va_list ap)
 {
 	char	*width;
 	char	value;
@@ -270,45 +234,39 @@ void	print_c_conversion(va_list ap)
 	value = cast_c_size(ap);
 	width_len = ft_strlen(width);
 	res_len = set_flag_for_c(width, value, width_len, 0);
+	return (res_len);
 }
 
-void	print_C_conversion(va_list ap)
+int		print_C_conversion(va_list ap)
 {
-	char		*res;
-	wchar_t		C_val;
+	char	*width;
+	wchar_t	value;
+	int		res_len;
 
-	res = set_width(0);
-	C_val = cast_C_size(ap);
-	if (ft_strlen(res) <= 1)
-	{
-		free(res);
-		print_unicode((unsigned int)C_val);
-	}
-	else
-	{
-		while (ft_strlen(res) > 1) // can be optimized with strlen
-		{
-			ft_putchar(*res);
-			res++;
-		}
-		print_unicode((unsigned int)C_val);
-	}
+	width = set_width(0);
+	value = cast_C_size(ap);
+	res_len = generate_and_print_utf_char(width, value);
+	return (res_len);
 }
 
 /* check res without width later! */
 
-void	print_percent_conversion()
+int		print_percent_conversion()
 {
-	char	*res;
-	int		res_len;
+	char	*width;
+	int		width_len;
 
-	res = set_width(0);
-	if (*res)
+	width = set_width(0);
+	width_len = ft_strlen(width);
+	if (width_len > 1)
 	{
-		res_len = ft_strlen(res);
-		res[res_len - 1] = '%';
-		ft_putstr(res);
+		if (g_head->flag_minus == 1)
+			width[0] = '%';
+		else
+			width[width_len - 1] = '%';
+		ft_putstr(width);
 	}
 	else
 		ft_putchar('%');
+	return ((width_len >= 1) ? width_len : 1);
 }
