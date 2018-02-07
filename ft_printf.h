@@ -42,17 +42,17 @@ typedef struct	s_fl
 
 t_flags		*g_head;
 
-void		ft_printf(char *fmt, ...);
+int			ft_printf(char *fmt, ...);
 
 int			validate_format(char *frm);
 void		begin_validation(char *frm);
 
 void		clean_flags_struct();
-int			read_flags_from_format(char *frm, va_list ap);
-int			continue_with_width(char *frm, va_list ap, int count);
-int			continue_with_precision(char *frm, va_list ap, int count);
-int			continue_with_size(char *frm, va_list ap, int count);
-int			continue_with_conversions(char *frm, va_list ap, int count);
+int			read_flags_from_format(char *frm);
+int			continue_with_width(char *frm, int count);
+int			continue_with_precision(char *frm, int count);
+int			continue_with_size(char *frm, int count);
+int			continue_with_conversions(char *frm, va_list ap);
 
 char			*generate_res_int(char *width, char *value);
 char			*generate_res_for_str(char *width, char *value);

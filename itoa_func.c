@@ -44,7 +44,7 @@ char	*itoa_base_unsign(size_t nb, int base, int upper_case)
 			res[len] = (nb % base) + 48;
 		else
 			res[len] = (nb % base) - 10 + (upper_case ? 65 : 97);
-		if (nb >= base)
+		if (nb >= (size_t)base)
 			nb /= base;
 	}
 	return (res);

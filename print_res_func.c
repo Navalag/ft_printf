@@ -53,16 +53,15 @@ char	*generate_res_for_str(char *width, char *value)
 	width_len = ft_strlen(width);
 	value_len = ft_strlen(value);
 	i = 0;
-	if (width_len <= value_len)
-	{
-		if (g_head->precision >= value_len)
+	if (width_len <= value_len && g_head->precision >= value_len
+		&& g_head->precision_flag)
 			res = value;
-		else
-			res = ft_strncpy(value, value, g_head->precision);
-	}
+	else if (g_head->precision < value_len && g_head->precision > width_len)
+		res = ft_strsub(value, 0, g_head->precision);
 	else
 	{
-		while (width_len > value_len || width_len > g_head->precision)
+		while (width_len > value_len || 
+			(g_head->precision_flag && width_len > g_head->precision))
 		{
 			i++;
 			width_len--;
@@ -178,6 +177,8 @@ int		print_D_d_i_conversions(va_list ap)
 	res = set_flag_for_d_i_u(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	printf("\n%s\n", res);
+	printf("%i\n", res_len);
 	return (res_len);
 }
 

@@ -285,7 +285,6 @@ char	*set_zero_flag(char *res)
 char	*set_zero_flag_for_s(char *res)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	if (res[i] != ' ')

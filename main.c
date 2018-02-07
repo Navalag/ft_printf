@@ -18,14 +18,17 @@
 int		main(void)
 {
 	setlocale(LC_ALL, "");
-	wchar_t *value = L"ЇЇЇ";
-	wchar_t *value2 = L"我是一只猫。";
-	wchar_t value3 = L'我';
-	fflush(stdout);
+	// wchar_t *value = L"ЇЇЇ";
+	// wchar_t *value2 = L"我是一只猫。";
+	// wchar_t value3 = L'我';
+	int		ret_1;
+	int		ret_2;
+	// fflush(stdout);
 	// char *str = L"我是一只猫";
-	ft_printf("Bla Bla %00010d asdad\n", 12);
-	   printf("Bla Bla %00010d asdad\n", 12);
+	ret_1 = ft_printf("Bla Bla %i\n", 12);
+	   ret_2 = printf("Bla Bla %i\n", 123);
 
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
 	   // printf("Bla Bla %#05x\n", 123);
 	
 

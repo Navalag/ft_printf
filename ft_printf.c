@@ -12,11 +12,43 @@
 
 #include "ft_printf.h"
 
-void	begin_process(va_list ap, char *frm)
-{
-	int		count;
-	int		ret_value;
+// int		begin_process(va_list ap, char *frm)
+// {
+// 	int		count;
+// 	int		ret_value;
 
+// 	ret_value = 0;
+// 	begin_validation(frm);
+// 	while (*frm)
+// 	{
+// 		if (*frm != '%')
+// 		{
+// 			ft_putchar(*frm);
+// 			frm++;
+// 			ret_value++;
+// 		}
+// 		else
+// 		{
+// 			frm++;
+// 			// ret_value++;
+// 			count = read_flags_from_format(frm);
+// 			frm += count;
+// 			ret_value += continue_with_conversions(frm++, ap);
+// 			// frm++;
+// 			// printf("%i\n", ret_value);
+// 		}
+// 	}
+// 	return (ret_value);
+// }
+
+int		ft_printf(char *frm, ...)
+{
+	va_list		ap;
+	int			ret_value;
+	int			count;
+
+	va_start(ap, frm);
+	ret_value = 0;
 	begin_validation(frm);
 	while (*frm)
 	{
@@ -29,25 +61,16 @@ void	begin_process(va_list ap, char *frm)
 		else
 		{
 			frm++;
-			count = read_flags_from_format(frm, ap);
+			// ret_value++;
+			count = read_flags_from_format(frm);
 			frm += count;
-			ret_value = continue_with_conversions(frm, ap, count);
-			frm++;
-			// printf("%s\n", frm);
+			ret_value += continue_with_conversions(frm++, ap);
+			// frm++;
+			// printf("%i\n", ret_value);
 		}
 	}
-}
-
-void	ft_printf(char *format, ...)
-{
-	va_list		ap;
-	char		*p;
-
-	va_start(ap, format);
-	p = format;
-	begin_process(ap, p);
-
 	va_end(ap);
+	return (ret_value);
 }
 
 // void	begin_process(va_list ap, char *frm)

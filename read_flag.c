@@ -31,35 +31,36 @@ void	clean_flags_struct()
 	g_head->conver_letter = 0;
 }
 
-int		read_flags_from_format(char *frm, va_list ap)
+int		read_flags_from_format(char *frm)
 {
-	t_flags		tmp;
+	t_flags		*tmp;
 	char		*all_flags;
 	int			count;
 
 	all_flags = "#0-+ ";
-	g_head = &tmp;
+	tmp = (t_flags *)malloc(sizeof(*tmp));
+	g_head = tmp;
 	count = 0;
 	clean_flags_struct();
 	while (ft_strchr(all_flags, *frm) != 0)
 	{
 		if (*frm == '#')
-			tmp.flag_hesh = 1;
+			g_head->flag_hesh = 1;
 		else if (*frm == '-')
-			tmp.flag_minus = 1;
+			g_head->flag_minus = 1;
 		else if (*frm == '+')
-			tmp.flag_plus = 1;
+			g_head->flag_plus = 1;
 		else if (*frm == '0')
-			tmp.flag_zero = 1;
+			g_head->flag_zero = 1;
 		else if (*frm == ' ')
-			tmp.flag_space = 1;
+			g_head->flag_space = 1;
 		frm++;
 		count++;
 	}
-	return (continue_with_width(frm, ap, count));
+	return (continue_with_width(frm, count));
 }
 
-int		continue_with_width(char *frm, va_list ap, int count)
+int		continue_with_width(char *frm, int count)
 {
 	int		res;
 
@@ -71,10 +72,10 @@ int		continue_with_width(char *frm, va_list ap, int count)
 		count++;
 	}
 	g_head->width = res;
-	return (continue_with_precision(frm, ap, count));
+	return (continue_with_precision(frm, count));
 }
 
-int		continue_with_precision(char *frm, va_list ap, int count)
+int		continue_with_precision(char *frm, int count)
 {
 	int		res;
 
@@ -92,15 +93,14 @@ int		continue_with_precision(char *frm, va_list ap, int count)
 		}
 	}
 	g_head->precision = res;
-	return (continue_with_size(frm, ap, count));
+	return (continue_with_size(frm, count));
 }
 
 /*
-** later need to add a ficha with more and less important sizes.
-** Check this func later and fix it!!!
+** Check and fix sizes later (if h and hh both will be used) 
 */
 
-int		continue_with_size(char *frm, va_list ap, int count)
+int		continue_with_size(char *frm, int count)
 {
 	char	*all_sizes;
 
@@ -125,10 +125,11 @@ int		continue_with_size(char *frm, va_list ap, int count)
 	return (count);
 }
 
-int		continue_with_conversions(char *frm, va_list ap, int count)
+int		continue_with_conversions(char *frm, va_list ap)
 {
 	int		res_count;
 
+	res_count = 0;
 	g_head->conver_letter = *frm;
 	if (*frm == 'd' || *frm == 'i' || *frm == 'D')
 		res_count = print_D_d_i_conversions(ap);

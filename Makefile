@@ -1,41 +1,50 @@
-NAME = libftprintf.a
-FLAG =  -Wall -Werror -Wextra -O3
-SRC =	choose_type_of_arg.c		\
-		free_memory.c 				\
-		ft_printf.c					\
-		ft_uintmxtoa.c				\
-		fun_to_pars_key.c			\
-		hamdle_d.c					\
-		is_someone.c				\
-		make_some_value.c			\
-		prepare_string_to_print.c	\
-		switch_on_flags.c			\
-		switch_on_wchar_flags.c		\
-		wchar_lib.c					\
-		wchar_t_unicode.c			\
-		work_with_arg.c				\
-		work_with_c_utf_c.c			\
-		work_with_d_utf_d_u_s.c		\
-		work_with_wchar_s.c			\
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: agalavan <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/02/07 13:16:08 by agalavan          #+#    #+#              #
+#    Updated: 2018/02/07 13:16:10 by agalavan         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-OBJ = $(SRC:.c=.o)
+NAME = libftprintf.a
+
+FLAGS = -Wall -Wextra -Werror -O3
+
+SRCS =	main.c \
+		ft_printf.c \
+		valid_func.c \
+		unicod_func.c \
+		read_flag.c \
+		print_res_func.c \
+		set_flag_func.c \
+		cast_func.c \
+		solve_func.c \
+		itoa_func.c
+
+OBJS = $(SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJS)
 	make -C libft
-	ar rc $(NAME) $(OBJ) libft/*.o
+	ar rc $(NAME) $(OBJS) libft/*.o
 	ranlib $(NAME)
 
 %.o: %.c
-	gcc $(FLAG) -c -o $@ $<
+	gcc $(FLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJ)
+	-rm -f $(OBJS)
 	make clean -C libft
 
 fclean: clean
-	rm -f $(NAME)
+	-rm -f $(NAME)
 	make fclean -C libft
 
 re: fclean all
+
+.PHONY: all clean fclean re
