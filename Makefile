@@ -14,8 +14,7 @@ NAME = libftprintf.a
 
 FLAGS = -Wall -Wextra -Werror -O3
 
-SRCS =	main.c \
-		ft_printf.c \
+SRCS =	ft_printf.c \
 		valid_func.c \
 		unicod_func.c \
 		read_flag.c \
@@ -38,7 +37,7 @@ $(NAME): $(OBJS)
 	gcc $(FLAGS) -c -o $@ $<
 
 clean:
-	-rm -f $(OBJS)
+	-rm -f $(OBJS) *.gch
 	make clean -C libft
 
 fclean: clean
@@ -46,5 +45,3 @@ fclean: clean
 	make fclean -C libft
 
 re: fclean all
-
-.PHONY: all clean fclean re

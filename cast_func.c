@@ -24,10 +24,10 @@ char	*cast_D_d_i_size(va_list ap)
 		return (itoa_base_sign(va_arg(ap, long long int)));
 	else if (g_head->size_l == 1)
 		return (itoa_base_sign(va_arg(ap, long int)));
-	else if (g_head->size_h == 1)
-		return (itoa_base_sign((short)va_arg(ap, int)));
 	else if (g_head->size_hh == 1)
 		return (itoa_base_sign((signed char)va_arg(ap, int)));
+	else if (g_head->size_h == 1)
+		return (itoa_base_sign((short)va_arg(ap, int)));
 	else
 		return (itoa_base_sign(va_arg(ap, int)));
 }
@@ -46,10 +46,10 @@ char	*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case)
 		return (itoa_base_unsign(va_arg(ap, unsigned long long int), base, up_case));
 	else if (g_head->size_l == 1)
 		return (itoa_base_unsign(va_arg(ap, unsigned long int), base, up_case));
-	else if (g_head->size_h == 1)
-		return (itoa_base_unsign((unsigned short)va_arg(ap, int), base, up_case));
 	else if (g_head->size_hh == 1)
 		return (itoa_base_unsign((unsigned char)va_arg(ap, int), base, up_case));
+	else if (g_head->size_h == 1)
+		return (itoa_base_unsign((unsigned short)va_arg(ap, int), base, up_case));
 	else
 		return (itoa_base_unsign(va_arg(ap, unsigned int), base, up_case));
 }
@@ -72,4 +72,9 @@ char	cast_c_size(va_list ap)
 wchar_t	cast_C_size(va_list ap)
 {
 	return (va_arg(ap, wchar_t));
+}
+
+char	*cast_p_size(va_list ap, int base, int up_case)
+{
+	return (itoa_base_unsign(va_arg(ap, size_t), base, up_case));
 }

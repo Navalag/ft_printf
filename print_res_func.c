@@ -177,8 +177,6 @@ int		print_D_d_i_conversions(va_list ap)
 	res = set_flag_for_d_i_u(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
-	printf("\n%s\n", res);
-	printf("%i\n", res_len);
 	return (res_len);
 }
 
@@ -191,7 +189,18 @@ int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 
 	width = set_width(1);
 	value = cast_u_U_o_O_x_X_size(ap, base, up_case);
-	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
+	if (value[0] == '0')
+	{
+		if (g_head->precision_flag == 1 && g_head->precision == 0)
+			res = width;
+		else
+		{
+			ft_putchar('0');
+			return (1);
+		}
+	}
+	else
+		res = set_flag_for_o_x_X(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
 	return (res_len);
@@ -206,7 +215,13 @@ int		print_s_conversion(va_list ap)
 
 	width = set_width(0);
 	value = cast_s_size(ap);
-	res = set_flag_for_s(generate_res_for_str(width, value));
+	if (value == NULL)
+	{
+		ft_putstr("(null)");
+		return (6);
+	}
+	else
+		res = set_flag_for_s(generate_res_for_str(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
 	return (res_len);
@@ -247,6 +262,23 @@ int		print_C_conversion(va_list ap)
 	width = set_width(0);
 	value = cast_C_size(ap);
 	res_len = generate_and_print_utf_char(width, value);
+	return (res_len);
+}
+
+int		print_p_conversion(va_list ap, int base, int up_case)
+{
+	char	*width;
+	char	*value;
+	char	*res;
+	int		res_len;
+
+	width = set_width(1);
+	value = cast_p_size(ap, base, up_case);
+	g_head->flag_hesh = 1;
+	g_head->conver_letter = 'x';
+	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
+	res_len = ft_strlen(res);
+	ft_putstr(res);
 	return (res_len);
 }
 

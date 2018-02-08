@@ -149,6 +149,8 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_c_conversion(ap);
 	else if (*frm == 'C')
 		res_count = print_C_conversion(ap);
+	else if (*frm == 'p')
+		res_count = print_p_conversion(ap, 16, 0);
 	else if (*frm == '%')
 		res_count = print_percent_conversion();
 	return (res_count);

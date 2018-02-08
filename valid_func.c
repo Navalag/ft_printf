@@ -16,6 +16,8 @@ void	begin_validation(char *frm)
 {
 	int		count;
 
+	// if (frm == NULL || ap == NULL)
+	// 	exit (0);
 	while (*frm)
 	{
 		if (*frm != '%')
