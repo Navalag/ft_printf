@@ -27,12 +27,16 @@ int		ft_intlen(size_t nb, int base)
 	return (len);
 }
 
-char	*itoa_base_unsign(size_t nb, int base, int upper_case)
+char	*itoa_base_unsign(size_t nb, int base, int up_case)
 {
-	char		*res;
-	int			len;
+	char	*res;
+	int		len;
+	char	*symb_lower;
+	char	*symb_upper;
 
 	len = ft_intlen(nb, base);
+	symb_lower = "0123456789abcdef";
+	symb_upper = "0123456789ABCDEF";
 	if (!(res = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
 	if (nb == 0)
@@ -40,41 +44,33 @@ char	*itoa_base_unsign(size_t nb, int base, int upper_case)
 	res[len] = '\0';
 	while (len--)
 	{
-		if (nb % base < 10)
-			res[len] = (nb % base) + 48;
-		else
-			res[len] = (nb % base) - 10 + (upper_case ? 65 : 97);
-		if (nb >= (size_t)base)
-			nb /= base;
+		res[len] = (up_case) ? symb_upper[nb % base] : symb_lower[nb % base];
+		nb /= base;
 	}
 	return (res);
 }
 
-char	*itoa_base_sign(long long int nb)
+char	*itoa_base_sign(intmax_t nb)
 {
 	char		*res;
+	uintmax_t	nb_copy;
 	size_t		len;
 
-	if (nb == -9223372036854775807)
-		return (ft_strdup("-9223372036854775807"));
-	len = (nb < 0) ? ft_intlen(-nb, 10) : ft_intlen(nb, 10);
+	nb_copy = (nb < 0) ? -nb : nb;
+	len = ft_intlen(nb_copy, 10);
 	if (nb < 0)
 		len++;
 	if (!(res = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
-	if (nb == 0)
+	if (nb_copy == 0)
 		res[0] = '0';
 	if (nb < 0)
-	{
 		res[0] = '-';
-		nb = -nb;
-	}
 	res[len] = '\0';
-	while (nb)
+	while (nb_copy)
 	{
-		len--;
-		res[len] = (nb % 10) + '0';
-		nb /= 10;
+		res[--len] = (nb_copy % 10) + '0';
+		nb_copy /= 10;
 	}
 	return (res);
 }

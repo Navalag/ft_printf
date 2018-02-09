@@ -12,25 +12,27 @@
 
 #include "ft_printf.h"
 
-void	begin_validation(char *frm)
-{
-	int		count;
+// int		begin_validation(char *frm)
+// {
+// 	int		count;
 
-	// if (frm == NULL || ap == NULL)
-	// 	exit (0);
-	while (*frm)
-	{
-		if (*frm != '%')
-			frm++;
-		else
-		{
-			frm++;
-			if ((count = validate_format(frm)) == 0)
-				exit (0);
-			frm += count;
-		}
-	}
-}
+// 	// if (frm == NULL || ap == NULL)
+// 	// 	exit (0);
+// 	while (*frm)
+// 	{
+// 		if (*frm != '%')
+// 			frm++;
+// 		else
+// 		{
+// 			frm++;
+// 			if ((count = validate_format(frm)) == 0)
+// 				exit (0);
+// 			frm += count;
+// 		}
+// 	}
+// }
+
+/* can be optimized without validation later */
 
 int		validate_format(char *frm)
 {

@@ -49,7 +49,7 @@ int		ft_printf(char *frm, ...)
 
 	va_start(ap, frm);
 	ret_value = 0;
-	begin_validation(frm);
+	// validate_format(frm);
 	while (*frm)
 	{
 		if (*frm != '%')
@@ -58,9 +58,9 @@ int		ft_printf(char *frm, ...)
 			frm++;
 			ret_value++;
 		}
-		else
+		else if (*++frm)
 		{
-			frm++;
+			// frm++;
 			// ret_value++;
 			count = read_flags_from_format(frm);
 			frm += count;

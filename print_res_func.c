@@ -101,8 +101,10 @@ int		generate_and_print_utf_str(char *width, wchar_t *value)
 {
 	int		width_len;
 	int		value_len;
+	int		width_len_copy;
 
 	width_len = ft_strlen(width);
+	width_len_copy = width_len;
 	value_len = ft_utf_strlen(value);
 	if (width_len <= value_len)
 		while (*value)
@@ -111,12 +113,12 @@ int		generate_and_print_utf_str(char *width, wchar_t *value)
 	{
 		while (*value)
 			print_unicode((unsigned int)*value++);
-		while (width_len-- > value_len)
+		while (width_len_copy-- > value_len)
 			ft_putchar(' ');
 	}
 	else
 	{
-		while (width_len-- > value_len)
+		while (width_len_copy-- > value_len)
 			ft_putchar(' ');
 		while (*value)
 			print_unicode((unsigned int)*value++);
@@ -174,7 +176,11 @@ int		print_D_d_i_conversions(va_list ap)
 
 	width = set_width(1);
 	value = cast_D_d_i_size(ap);
-	res = set_flag_for_d_i_u(generate_res_for_int(width, value));
+	if (value[0] == '0' && g_head->precision_flag == 1
+		&& g_head->precision == 0)
+		res = width;
+	else
+		res = set_flag_for_d_i_u(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
 	return (res_len);
@@ -191,7 +197,13 @@ int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 	value = cast_u_U_o_O_x_X_size(ap, base, up_case);
 	if (value[0] == '0')
 	{
-		if (g_head->precision_flag == 1 && g_head->precision == 0)
+		if ((g_head->conver_letter == 'O' || g_head->conver_letter == 'o') &&
+			(g_head->precision_flag == 1 && g_head->precision == 0 && g_head->flag_hesh == 1))
+		{
+			ft_putchar('0');
+			return (1);
+		}
+		else if (g_head->precision_flag == 1 && g_head->precision == 0)
 			res = width;
 		else
 		{
@@ -220,8 +232,7 @@ int		print_s_conversion(va_list ap)
 		ft_putstr("(null)");
 		return (6);
 	}
-	else
-		res = set_flag_for_s(generate_res_for_str(width, value));
+	res = set_flag_for_s(generate_res_for_str(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
 	return (res_len);
@@ -235,6 +246,11 @@ int		print_S_conversion(va_list ap)
 
 	width = set_width(0);
 	value = cast_S_size(ap);
+	if (value == NULL)
+	{
+		ft_putstr("(null)");
+		return (6);
+	}
 	res_len = generate_and_print_utf_str(width, value);
 	return (res_len);
 }

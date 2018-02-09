@@ -38,7 +38,7 @@ int		read_flags_from_format(char *frm)
 	int			count;
 
 	all_flags = "#0-+ ";
-	tmp = (t_flags *)malloc(sizeof(*tmp));
+	tmp = (t_flags *)malloc(sizeof(tmp));
 	g_head = tmp;
 	count = 0;
 	clean_flags_struct();
@@ -141,17 +141,22 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 0);
 	else if (*frm == 'X')
 		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 1);
+	else if (*frm == 'S' || (*frm == 's' && g_head->size_l == 1))
+		res_count = print_S_conversion(ap);
 	else if (*frm == 's')
 		res_count = print_s_conversion(ap);
-	else if (*frm == 'S')
-		res_count = print_S_conversion(ap);
+	else if (*frm == 'C' || (*frm == 'c' && g_head->size_l == 1))
+		res_count = print_C_conversion(ap);
 	else if (*frm == 'c')
 		res_count = print_c_conversion(ap);
-	else if (*frm == 'C')
-		res_count = print_C_conversion(ap);
 	else if (*frm == 'p')
 		res_count = print_p_conversion(ap, 16, 0);
 	else if (*frm == '%')
 		res_count = print_percent_conversion();
+	else
+	{
+		ft_putchar(*frm); // must be changed later
+		res_count++;
+	}
 	return (res_count);
 }

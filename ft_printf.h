@@ -80,8 +80,8 @@ char		cast_c_size(va_list ap);
 wchar_t		cast_C_size(va_list ap);
 char		*cast_p_size(va_list ap, int base, int up_case);
 
-char		*itoa_base_unsign(size_t nb, int base, int upper_case);
-char		*itoa_base_sign(long long int nb);
+char		*itoa_base_unsign(size_t nb, int base, int uper_case);
+char		*itoa_base_sign(intmax_t nb);
 int			ft_intlen(size_t nb, int base);
 
 int			find_bin_size(unsigned int val);
