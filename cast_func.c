@@ -15,43 +15,45 @@
 char	*cast_D_d_i_size(va_list ap)
 {
 	if (g_head->conver_letter == 'D')
-		return (itoa_base_sign(va_arg(ap, long int)));
+		return (s_itoa_base(va_arg(ap, long int)));
 	else if (g_head->size_z == 1)
-		return (itoa_base_sign(va_arg(ap, size_t))); // check if z with int values
+		return (s_itoa_base(va_arg(ap, intmax_t)));
 	else if (g_head->size_j == 1)
-		return (itoa_base_sign(va_arg(ap, intmax_t)));
+		return (s_itoa_base(va_arg(ap, intmax_t)));
 	else if (g_head->size_ll == 1)
-		return (itoa_base_sign(va_arg(ap, long long int)));
+		return (s_itoa_base(va_arg(ap, intmax_t)));
 	else if (g_head->size_l == 1)
-		return (itoa_base_sign(va_arg(ap, long int)));
+		return (s_itoa_base(va_arg(ap, long int)));
 	else if (g_head->size_hh == 1)
-		return (itoa_base_sign((signed char)va_arg(ap, int)));
+		return (s_itoa_base((signed char)va_arg(ap, int)));
 	else if (g_head->size_h == 1)
-		return (itoa_base_sign((short)va_arg(ap, int)));
+		return (s_itoa_base((short)va_arg(ap, int)));
 	else
-		return (itoa_base_sign(va_arg(ap, int)));
+		return (s_itoa_base(va_arg(ap, int)));
 }
 
 char	*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case)
 {
 	if (g_head->conver_letter == 'U')
-		return (itoa_base_unsign(va_arg(ap, unsigned long int), base, up_case));
+		return (u_itoa_base(va_arg(ap, unsigned long), base, up_case));
 	else if (g_head->conver_letter == 'O')
-		return (itoa_base_unsign(va_arg(ap, unsigned long int), base, up_case));
+		return (u_itoa_base(va_arg(ap, unsigned long), base, up_case));
+	else if (g_head->conver_letter == 'p')
+		return (u_itoa_base(va_arg(ap, size_t), base, up_case));
 	else if (g_head->size_z == 1)
-		return (itoa_base_unsign(va_arg(ap, size_t), base, up_case));
+		return (u_itoa_base(va_arg(ap, size_t), base, up_case));
 	else if (g_head->size_j == 1)
-		return (itoa_base_unsign(va_arg(ap, intmax_t), base, up_case));
+		return (u_itoa_base(va_arg(ap, uintmax_t), base, up_case));
 	else if (g_head->size_ll == 1)
-		return (itoa_base_unsign(va_arg(ap, unsigned long long int), base, up_case));
+		return (u_itoa_base(va_arg(ap, uintmax_t), base, up_case));
 	else if (g_head->size_l == 1)
-		return (itoa_base_unsign(va_arg(ap, unsigned long int), base, up_case));
+		return (u_itoa_base(va_arg(ap, unsigned long), base, up_case));
 	else if (g_head->size_hh == 1)
-		return (itoa_base_unsign((unsigned char)va_arg(ap, int), base, up_case));
+		return (u_itoa_base((unsigned char)va_arg(ap, int), base, up_case));
 	else if (g_head->size_h == 1)
-		return (itoa_base_unsign((unsigned short)va_arg(ap, int), base, up_case));
+		return (u_itoa_base((unsigned short)va_arg(ap, int), base, up_case));
 	else
-		return (itoa_base_unsign(va_arg(ap, unsigned int), base, up_case));
+		return (u_itoa_base(va_arg(ap, unsigned int), base, up_case));
 }
 
 char	*cast_s_size(va_list ap)
@@ -74,7 +76,7 @@ wchar_t	cast_C_size(va_list ap)
 	return (va_arg(ap, wchar_t));
 }
 
-char	*cast_p_size(va_list ap, int base, int up_case)
-{
-	return (itoa_base_unsign(va_arg(ap, size_t), base, up_case));
-}
+// char	*cast_p_size(va_list ap, int base, int up_case)
+// {
+// 	return (u_itoa_base(va_arg(ap, size_t), base, up_case));
+// }

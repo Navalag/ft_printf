@@ -66,7 +66,6 @@ int			print_s_conversion(va_list ap);
 int			print_S_conversion(va_list ap);
 int			print_c_conversion(va_list ap);
 int			print_C_conversion(va_list ap);
-int			print_p_conversion(va_list ap, int base, int up_case);
 int			print_percent_conversion();
 
 char		*set_int_precision(char *res);
@@ -78,10 +77,9 @@ char		*cast_s_size(va_list ap);
 wchar_t		*cast_S_size(va_list ap);
 char		cast_c_size(va_list ap);
 wchar_t		cast_C_size(va_list ap);
-char		*cast_p_size(va_list ap, int base, int up_case);
 
-char		*itoa_base_unsign(size_t nb, int base, int uper_case);
-char		*itoa_base_sign(intmax_t nb);
+char		*u_itoa_base(size_t nb, int base, int uper_case);
+char		*s_itoa_base(intmax_t nb);
 int			ft_intlen(size_t nb, int base);
 
 int			find_bin_size(unsigned int val);

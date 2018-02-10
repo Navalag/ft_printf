@@ -195,7 +195,7 @@ int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 
 	width = set_width(1);
 	value = cast_u_U_o_O_x_X_size(ap, base, up_case);
-	if (value[0] == '0')
+	if (value[0] == '0' && g_head->conver_letter != 'p')
 	{
 		if ((g_head->conver_letter == 'O' || g_head->conver_letter == 'o') &&
 			(g_head->precision_flag == 1 && g_head->precision == 0 && g_head->flag_hesh == 1))
@@ -281,22 +281,22 @@ int		print_C_conversion(va_list ap)
 	return (res_len);
 }
 
-int		print_p_conversion(va_list ap, int base, int up_case)
-{
-	char	*width;
-	char	*value;
-	char	*res;
-	int		res_len;
+// int		print_p_conversion(va_list ap, int base, int up_case)
+// {
+// 	char	*width;
+// 	char	*value;
+// 	char	*res;
+// 	int		res_len;
 
-	width = set_width(1);
-	value = cast_p_size(ap, base, up_case);
-	g_head->flag_hesh = 1;
-	g_head->conver_letter = 'x';
-	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
-	res_len = ft_strlen(res);
-	ft_putstr(res);
-	return (res_len);
-}
+// 	width = set_width(1);
+// 	value = cast_p_size(ap, base, up_case);
+// 	g_head->flag_hesh = 1;
+// 	g_head->conver_letter = 'x';
+// 	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
+// 	res_len = ft_strlen(res);
+// 	ft_putstr(res);
+// 	return (res_len);
+// }
 
 /* check res without width later! */
 

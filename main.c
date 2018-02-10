@@ -97,8 +97,21 @@ int		main(void)
 	//    ret_2 = printf("{%05.S}\n", L"42 c est cool");
 	// printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
 
-	ret_1 = ft_printf("% ");
-	   ret_2 = printf("% ");
+	// ret_1 = ft_printf("% ");
+	//    ret_2 = printf("% ");
+	// printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	// ret_1 = ft_printf("%ll#x\n", 9223372036854775807);
+	//    ret_2 = printf("%ll#x\n", 9223372036854775807);
+	// printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("%p\n", 0);
+	   ret_2 = printf("%p\n", 0);
 	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("{%-12p}\n", &strlen);
+	   ret_2 = printf("{%-12p}\n", &strlen);
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
 	return (0);
 }

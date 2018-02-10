@@ -42,7 +42,8 @@ char	*set_flag_for_o_x_X(char *res)
 	if (g_head->flag_hesh == 1 && (g_head->conver_letter == 'o' ||
 		g_head->conver_letter == 'O'))
 		res = set_hesh_flag_for_octal(res);
-	else if (g_head->flag_hesh == 1 && g_head->conver_letter == 'x')
+	else if ((g_head->flag_hesh == 1 && g_head->conver_letter == 'x') ||
+		g_head->conver_letter == 'p')
 		res = set_hesh_flag_for_hexadecimal_x(res);
 	else if (g_head->flag_hesh == 1 && g_head->conver_letter == 'X')
 		res = set_hesh_flag_for_hexadecimal_X(res);

@@ -42,7 +42,7 @@ int		read_flags_from_format(char *frm)
 	g_head = tmp;
 	count = 0;
 	clean_flags_struct();
-	while (ft_strchr(all_flags, *frm) != 0)
+	while (*frm && ft_strchr(all_flags, *frm) != 0)
 	{
 		if (*frm == '#')
 			g_head->flag_hesh = 1;
@@ -105,7 +105,7 @@ int		continue_with_size(char *frm, int count)
 	char	*all_sizes;
 
 	all_sizes = "hljz";
-	while (ft_strchr(all_sizes, *frm) != 0)
+	while (*frm && ft_strchr(all_sizes, *frm) != 0)
 	{
 		if (*frm == 'h' && *(frm + 1) == 'h')
 			g_head->size_hh = 1;
@@ -137,7 +137,7 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_u_U_o_O_x_X_conversion(ap, 10, 0);
 	else if (*frm == 'o' || *frm == 'O')
 		res_count = print_u_U_o_O_x_X_conversion(ap, 8, 0);
-	else if (*frm == 'x')
+	else if (*frm == 'x' || *frm == 'p')
 		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 0);
 	else if (*frm == 'X')
 		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 1);
@@ -149,11 +149,9 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_C_conversion(ap);
 	else if (*frm == 'c')
 		res_count = print_c_conversion(ap);
-	else if (*frm == 'p')
-		res_count = print_p_conversion(ap, 16, 0);
 	else if (*frm == '%')
 		res_count = print_percent_conversion();
-	else
+	else if (*frm)
 	{
 		ft_putchar(*frm); // must be changed later
 		res_count++;

@@ -27,7 +27,7 @@ int		ft_intlen(size_t nb, int base)
 	return (len);
 }
 
-char	*itoa_base_unsign(size_t nb, int base, int up_case)
+char	*u_itoa_base(size_t nb, int base, int up_case)
 {
 	char	*res;
 	int		len;
@@ -50,7 +50,7 @@ char	*itoa_base_unsign(size_t nb, int base, int up_case)
 	return (res);
 }
 
-char	*itoa_base_sign(intmax_t nb)
+char	*s_itoa_base(intmax_t nb)
 {
 	char		*res;
 	uintmax_t	nb_copy;
