@@ -154,6 +154,7 @@ int		continue_with_conversions(char *frm, va_list ap)
 	else if (*frm)
 	{
 		ft_putchar(*frm); // must be changed later
+		free(g_head);
 		res_count++;
 	}
 	return (res_count);

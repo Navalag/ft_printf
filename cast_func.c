@@ -58,7 +58,14 @@ char	*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case)
 
 char	*cast_s_size(va_list ap)
 {
-	return (va_arg(ap, char *));
+	char	*res;
+
+	res = va_arg(ap, char *);
+	if (res == NULL)
+		res = ft_strdup("(null)");
+	else
+		res = ft_strdup(res);
+	return (res);
 }
 
 wchar_t	*cast_S_size(va_list ap)
@@ -75,8 +82,3 @@ wchar_t	cast_C_size(va_list ap)
 {
 	return (va_arg(ap, wchar_t));
 }
-
-// char	*cast_p_size(va_list ap, int base, int up_case)
-// {
-// 	return (u_itoa_base(va_arg(ap, size_t), base, up_case));
-// }

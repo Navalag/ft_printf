@@ -54,8 +54,8 @@ int			continue_with_precision(char *frm, int count);
 int			continue_with_size(char *frm, int count);
 int			continue_with_conversions(char *frm, va_list ap);
 
-char			*generate_res_int(char *width, char *value);
-char			*generate_res_for_str(char *width, char *value);
+char		*generate_res_int(char *width, char *value);
+char		*generate_res_for_str(char *width, char *value);
 int			generate_and_print_utf_str(char *width, wchar_t *value);
 int			generate_and_print_utf_char(char *width, wchar_t value);
 int			ft_utf_strlen(wchar_t *value);
@@ -67,6 +67,8 @@ int			print_S_conversion(va_list ap);
 int			print_c_conversion(va_list ap);
 int			print_C_conversion(va_list ap);
 int			print_percent_conversion();
+
+void		clean_memory_leaks(char *res);
 
 char		*set_int_precision(char *res);
 char		*set_width(int prec_y_n);
@@ -88,17 +90,17 @@ void		continue_with_3_bytes(unsigned int S_val);
 void		continue_with_4_bytes(unsigned int S_val);
 void		print_unicode(unsigned int S_val);
 
-char			*set_flag_for_d_i_u(char *res);
-char			*set_flag_for_o_x_X(char *res);
-char			*set_flag_for_s(char *res);
-int				set_flag_for_c(char *width, char value, int width_len, int i);
-char			*set_plus_flag(char *res);
-char			*set_space_flag(char *res);
-char			*set_minus_flag(char *res);
-char			*set_zero_flag(char *res);
-char			*set_zero_flag_for_s(char *res);
-char			*set_hesh_flag_for_octal(char *res);
-char			*set_hesh_flag_for_hexadecimal_x(char *res);
-char			*set_hesh_flag_for_hexadecimal_X(char *res);
+char		*set_flag_for_d_i_u(char *res);
+char		*set_flag_for_o_x_X(char *res);
+char		*set_flag_for_s(char *res);
+int			set_flag_for_c(char *width, char value, int width_len, int i);
+char		*set_plus_flag(char *res);
+char		*set_space_flag(char *res);
+char		*set_minus_flag(char *res);
+char		*set_zero_flag(char *res);
+char		*set_zero_flag_for_s(char *res);
+char		*set_hesh_flag_for_octal(char *res);
+char		*set_hesh_flag_for_hexadecimal_x(char *res);
+char		*set_hesh_flag_for_hexadecimal_X(char *res);
 
 #endif

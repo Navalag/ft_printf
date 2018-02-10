@@ -23,7 +23,10 @@ char	*generate_res_for_int(char *width, char *value)
 	value_len = ft_strlen(value);
 	i = 0;
 	if (width_len <= value_len)
+	{
 		res = value;
+		free(width);
+	}
 	else
 	{
 		while (value_len && value[value_len - 1] != '-')
@@ -36,9 +39,16 @@ char	*generate_res_for_int(char *width, char *value)
 			res = width;
 		}
 		else if (width[i] != ' ' && value[0] == '-')
+		{
 			res = ft_strjoin("-", width);
+			free(value);
+			free(width);
+		}
 		else
+		{
 			res = width;
+			free(value);
+		}
 	}
 	return (res);
 }
@@ -55,9 +65,16 @@ char	*generate_res_for_str(char *width, char *value)
 	i = 0;
 	if (width_len <= value_len && g_head->precision >= value_len
 		&& g_head->precision_flag)
-			res = value;
+	{
+		res = value;
+		free(width);
+	}
 	else if (g_head->precision < value_len && g_head->precision > width_len)
+	{
 		res = ft_strsub(value, 0, g_head->precision);
+		free(value);
+		free(width);
+	}
 	else
 	{
 		while (width_len > value_len || 
@@ -71,6 +88,7 @@ char	*generate_res_for_str(char *width, char *value)
 		else
 			ft_strcpy(width + i, value);
 		res = width;
+		free(value);
 	}
 	return (res);
 }
@@ -178,11 +196,15 @@ int		print_D_d_i_conversions(va_list ap)
 	value = cast_D_d_i_size(ap);
 	if (value[0] == '0' && g_head->precision_flag == 1
 		&& g_head->precision == 0)
+	{
 		res = width;
+		free(value);
+	}
 	else
 		res = set_flag_for_d_i_u(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	clean_memory_leaks(res);
 	return (res_len);
 }
 
@@ -198,16 +220,24 @@ int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 	if (value[0] == '0' && g_head->conver_letter != 'p')
 	{
 		if ((g_head->conver_letter == 'O' || g_head->conver_letter == 'o') &&
-			(g_head->precision_flag == 1 && g_head->precision == 0 && g_head->flag_hesh == 1))
+			(g_head->precision_flag == 1 && g_head->precision == 0 &&
+			g_head->flag_hesh == 1))
 		{
 			ft_putchar('0');
+			free(width);
+			free(value);
 			return (1);
 		}
 		else if (g_head->precision_flag == 1 && g_head->precision == 0)
+		{
 			res = width;
+			free(value);
+		}
 		else
 		{
 			ft_putchar('0');
+			free(width);
+			free(value);
 			return (1);
 		}
 	}
@@ -215,6 +245,7 @@ int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 		res = set_flag_for_o_x_X(generate_res_for_int(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	clean_memory_leaks(res);
 	return (res_len);
 }
 
@@ -227,14 +258,10 @@ int		print_s_conversion(va_list ap)
 
 	width = set_width(0);
 	value = cast_s_size(ap);
-	if (value == NULL)
-	{
-		ft_putstr("(null)");
-		return (6);
-	}
 	res = set_flag_for_s(generate_res_for_str(width, value));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	clean_memory_leaks(res);
 	return (res_len);
 }
 
@@ -252,6 +279,7 @@ int		print_S_conversion(va_list ap)
 		return (6);
 	}
 	res_len = generate_and_print_utf_str(width, value);
+	clean_memory_leaks(width);
 	return (res_len);
 }
 
@@ -266,6 +294,7 @@ int		print_c_conversion(va_list ap)
 	value = cast_c_size(ap);
 	width_len = ft_strlen(width);
 	res_len = set_flag_for_c(width, value, width_len, 0);
+	clean_memory_leaks(width);
 	return (res_len);
 }
 
@@ -278,25 +307,9 @@ int		print_C_conversion(va_list ap)
 	width = set_width(0);
 	value = cast_C_size(ap);
 	res_len = generate_and_print_utf_char(width, value);
+	clean_memory_leaks(width);
 	return (res_len);
 }
-
-// int		print_p_conversion(va_list ap, int base, int up_case)
-// {
-// 	char	*width;
-// 	char	*value;
-// 	char	*res;
-// 	int		res_len;
-
-// 	width = set_width(1);
-// 	value = cast_p_size(ap, base, up_case);
-// 	g_head->flag_hesh = 1;
-// 	g_head->conver_letter = 'x';
-// 	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
-// 	res_len = ft_strlen(res);
-// 	ft_putstr(res);
-// 	return (res_len);
-// }
 
 /* check res without width later! */
 
@@ -317,5 +330,12 @@ int		print_percent_conversion()
 	}
 	else
 		ft_putchar('%');
+	clean_memory_leaks(width);
 	return ((width_len >= 1) ? width_len : 1);
+}
+
+void	clean_memory_leaks(char *res)
+{
+	free(g_head);
+	free(res);
 }
