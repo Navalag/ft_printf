@@ -147,10 +147,8 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_s_conversion(ap);
 	else if (*frm == 'C' || (*frm == 'c' && g_head->size_l == 1))
 		res_count = print_C_conversion(ap);
-	else if (*frm == 'c')
+	else if (*frm == 'c' || *frm == '%')
 		res_count = print_c_conversion(ap);
-	else if (*frm == '%')
-		res_count = print_percent_conversion();
 	else if (*frm)
 	{
 		ft_putchar(*frm); // must be changed later

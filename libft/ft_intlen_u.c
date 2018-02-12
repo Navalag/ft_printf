@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_intlen_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agalavan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 19:48:22 by agalavan          #+#    #+#             */
-/*   Updated: 2017/11/07 19:48:24 by agalavan         ###   ########.fr       */
+/*   Created: 2018/02/12 10:55:52 by agalavan          #+#    #+#             */
+/*   Updated: 2018/02/12 10:55:56 by agalavan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int		ft_intlen_u(size_t nb, int base)
 {
 	int		len;
 
-	len = ft_strlen(s);
-	if (s == NULL)
-		return ;
-	write(1, s, len);
+	len = 0;
+	if (nb <= 0)
+		len = 1;
+	while (nb != 0)
+	{
+		nb /= base;
+		len++;
+	}
+	return (len);
 }

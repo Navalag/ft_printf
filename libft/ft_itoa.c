@@ -10,49 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdlib.h>
+#include "libft.h"
 
-static	int		ft_intlen(long int nb)
-{
-	int		len;
-
-	len = 0;
-	if (nb <= 0)
-		len = 1;
-	while (nb != 0)
-	{
-		nb /= 10;
-		len++;
-	}
-	return (len);
-}
-
-char			*ft_itoa(int n)
+char	*ft_itoa(intmax_t nb)
 {
 	char		*res;
+	uintmax_t	nb_copy;
 	size_t		len;
-	long int	num;
 
-	num = n;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	len = ft_intlen(num) + 1;
-	if (!(res = (char*)malloc(sizeof(char) * len)))
+	nb_copy = (nb < 0) ? -nb : nb;
+	len = ft_intlen_u(nb_copy, 10);
+	if (nb < 0)
+		len++;
+	if (!(res = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
-	if (num == 0)
+	if (nb_copy == 0)
 		res[0] = '0';
-	if (num < 0)
-	{
+	if (nb < 0)
 		res[0] = '-';
-		num = -num;
-	}
-	res[len - 1] = '\0';
-	while (num)
+	res[len] = '\0';
+	while (nb_copy)
 	{
-		len--;
-		res[len - 1] = (num % 10) + '0';
-		num /= 10;
+		res[--len] = (nb_copy % 10) + '0';
+		nb_copy /= 10;
 	}
 	return (res);
 }

@@ -76,7 +76,10 @@ SRCS =	ft_atoi.c\
 		ft_factorial.c\
 		ft_power.c\
 		ft_sqrt.c\
-		ft_is_prime.c
+		ft_is_prime.c\
+		ft_itoa_base_u.c\
+		ft_intlen_u.c\
+		ft_print_utf.c
 
 OBJS = $(SRCS:%.c=%.o)
 

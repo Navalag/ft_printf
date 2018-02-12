@@ -96,17 +96,15 @@ char	*generate_res_for_str(char *width, char *value)
 int		ft_utf_strlen(wchar_t *value)
 {
 	int		len;
-	int		bin_len;
 
 	len = 0;
 	while (*value)
 	{
-		bin_len = find_bin_size(*value);
-		if (bin_len <= 7)
+		if (*value <= 0x7F)
 			len++;
-		else if (bin_len <= 11)
+		else if (*value <= 0x7FF)
 			len += 2;
-		else if (bin_len <= 16)
+		else if (*value <= 0xE08080)
 			len += 3;
 		else
 			len += 4;
@@ -126,11 +124,11 @@ int		generate_and_print_utf_str(char *width, wchar_t *value)
 	value_len = ft_utf_strlen(value);
 	if (width_len <= value_len)
 		while (*value)
-			print_unicode((unsigned int)*value++);
+			ft_print_utf((unsigned int)*value++);
 	else if (g_head->flag_minus == 1)
 	{
 		while (*value)
-			print_unicode((unsigned int)*value++);
+			ft_print_utf((unsigned int)*value++);
 		while (width_len_copy-- > value_len)
 			ft_putchar(' ');
 	}
@@ -139,21 +137,18 @@ int		generate_and_print_utf_str(char *width, wchar_t *value)
 		while (width_len_copy-- > value_len)
 			ft_putchar(' ');
 		while (*value)
-			print_unicode((unsigned int)*value++);
+			ft_print_utf((unsigned int)*value++);
 	}
 	return ((width_len <= value_len) ? value_len : width_len);
 }
 
 int		ft_utf_charlen(wchar_t value)
 {
-	int		bin_len;
-
-	bin_len = find_bin_size(value);
-	if (bin_len <= 7)
+	if (value <= 0x7F)
 		return (1);
-	else if (bin_len <= 11)
+	else if (value <= 0x7FF)
 		return (2);
-	else if (bin_len <= 16)
+	else if (value <= 0xE08080)
 		return (3);
 	else
 		return (4);
@@ -167,10 +162,10 @@ int		generate_and_print_utf_char(char *width, wchar_t value)
 	width_len = ft_strlen(width);
 	value_len = ft_utf_charlen(value);
 	if (width_len <= value_len)
-		print_unicode((unsigned int)value);
+		ft_print_utf((unsigned int)value);
 	else if (g_head->flag_minus == 1)
 	{
-		print_unicode((unsigned int)value);
+		ft_print_utf((unsigned int)value);
 		while (width_len-- > value_len)
 			ft_putchar(' ');
 	}
@@ -178,7 +173,7 @@ int		generate_and_print_utf_char(char *width, wchar_t value)
 	{
 		while (width_len-- > value_len)
 			ft_putchar(' ');
-		print_unicode((unsigned int)value);
+		ft_print_utf((unsigned int)value);
 	}
 	return ((width_len <= value_len) ? value_len : width_len);
 }
@@ -291,7 +286,10 @@ int		print_c_conversion(va_list ap)
 	int		res_len;
 
 	width = set_width(0);
-	value = cast_c_size(ap);
+	if (g_head->conver_letter == '%')
+		value = '%';
+	else
+		value = cast_c_size(ap);
 	width_len = ft_strlen(width);
 	res_len = set_flag_for_c(width, value, width_len, 0);
 	clean_memory_leaks(width);
@@ -309,29 +307,6 @@ int		print_C_conversion(va_list ap)
 	res_len = generate_and_print_utf_char(width, value);
 	clean_memory_leaks(width);
 	return (res_len);
-}
-
-/* check res without width later! */
-
-int		print_percent_conversion()
-{
-	char	*width;
-	int		width_len;
-
-	width = set_width(0);
-	width_len = ft_strlen(width);
-	if (width_len > 1)
-	{
-		if (g_head->flag_minus == 1)
-			width[0] = '%';
-		else
-			width[width_len - 1] = '%';
-		ft_putstr(width);
-	}
-	else
-		ft_putchar('%');
-	clean_memory_leaks(width);
-	return ((width_len >= 1) ? width_len : 1);
 }
 
 void	clean_memory_leaks(char *res)

@@ -44,9 +44,6 @@ t_flags		*g_head;
 
 int			ft_printf(char *fmt, ...);
 
-int			validate_format(char *frm);
-void		begin_validation(char *frm);
-
 void		clean_flags_struct();
 int			read_flags_from_format(char *frm);
 int			continue_with_width(char *frm, int count);
@@ -66,7 +63,6 @@ int			print_s_conversion(va_list ap);
 int			print_S_conversion(va_list ap);
 int			print_c_conversion(va_list ap);
 int			print_C_conversion(va_list ap);
-int			print_percent_conversion();
 
 void		clean_memory_leaks(char *res);
 
@@ -79,16 +75,6 @@ char		*cast_s_size(va_list ap);
 wchar_t		*cast_S_size(va_list ap);
 char		cast_c_size(va_list ap);
 wchar_t		cast_C_size(va_list ap);
-
-char		*u_itoa_base(size_t nb, int base, int uper_case);
-char		*s_itoa_base(intmax_t nb);
-int			ft_intlen(size_t nb, int base);
-
-int			find_bin_size(unsigned int val);
-void		continue_with_2_bytes(unsigned int S_val);
-void		continue_with_3_bytes(unsigned int S_val);
-void		continue_with_4_bytes(unsigned int S_val);
-void		print_unicode(unsigned int S_val);
 
 char		*set_flag_for_d_i_u(char *res);
 char		*set_flag_for_o_x_X(char *res);

@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <stdint.h>
 
 typedef	struct		s_list
 {
@@ -73,7 +74,7 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
-char				*ft_itoa(int n);
+char				*ft_itoa(intmax_t nb);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
@@ -85,5 +86,8 @@ int					ft_factorial(int nb);
 int					ft_power(int nb, int power);
 int					ft_is_prime(int nb);
 int					ft_sqrt(int nb);
+char				*ft_itoa_base_u(size_t nb, int base, int up_case);
+int					ft_intlen_u(size_t nb, int base);
+void				ft_print_utf(unsigned int utf_val);
 
 #endif
