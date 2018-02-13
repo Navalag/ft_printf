@@ -19,7 +19,7 @@
 # include <stdarg.h>
 # include <wchar.h>
 # include <locale.h>
-# include "libft/libft.h"
+# include "../libft/inc/libft.h"
 
 typedef struct	s_fl
 {

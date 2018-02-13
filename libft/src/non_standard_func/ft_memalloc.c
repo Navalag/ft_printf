@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agalavan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/11 11:04:05 by agalavan          #+#    #+#             */
-/*   Updated: 2018/01/11 11:04:07 by agalavan         ###   ########.fr       */
+/*   Created: 2017/11/09 09:14:24 by agalavan          #+#    #+#             */
+/*   Updated: 2017/11/09 09:14:26 by agalavan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <stdlib.h>
+#include "../../inc/libft.h"
 
-int		ft_printf(char *frm, ...)
+/*
+** Allocates (with malloc(3)) and returns a “fresh” memory
+** area. The memory allocated is initialized to 0. If the allocation
+** fails, the function returns NULL.
+*/
+
+void	*ft_memalloc(size_t size)
 {
-	va_list		ap;
-	int			ret_value;
-	int			count;
+	void	*res;
 
-	va_start(ap, frm);
-	ret_value = 0;
-	while (*frm)
-	{
-		if (*frm != '%')
-		{
-			ft_putchar(*frm);
-			ret_value++;
-		}
-		else if (*++frm)
-		{
-			count = read_flags_from_format(frm);
-			frm += count;
-			ret_value += continue_with_conversions(frm, ap);
-		}
-		if (*frm)
-			frm++;
-	}
-	va_end(ap);
-	return (ret_value);
+	res = malloc(size);
+	if (res == NULL)
+		return (NULL);
+	res = ft_memset(res, 0, size);
+	return (res);
 }
