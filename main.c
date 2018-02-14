@@ -13,7 +13,7 @@
 // #include <stdio.h>
 // #include <locale.h>
 // #include <wchar.h>
-#include "ft_printf.h"
+#include "inc/ft_printf.h"
 
 int		main(void)
 {
@@ -25,7 +25,6 @@ int		main(void)
 	int		ret_1;
 	int		ret_2;
 	str = &ret_1;
-	// char *str = L"我是一只猫";
 	// ret_1 = ft_printf("% Zoooo\n");
 	//    ret_2 = printf("% Zoooo\n");
 
@@ -116,8 +115,16 @@ int		main(void)
 	//    ret_2 = printf("%hhC, %hhC\n", 0, L'米');
 	// printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
 
-	ret_1 = ft_printf("%010%\n");
-	   ret_2 = printf("%010%\n");
+	// ret_1 = ft_printf("%010%\n");
+	//    ret_2 = printf("%010%\n");
+	// printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("|%#-10.o|\n", 0);
+	   ret_2 = printf("|%#-10.o|\n", 0);
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("|%#10x|\n", 0);
+	   ret_2 = printf("|%#10x|\n", 0);
 	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
 
 // #include <string.h>

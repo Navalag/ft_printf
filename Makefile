@@ -22,11 +22,17 @@ LIB_DIR := ./libft/
 # project source files
 
 SRC =	ft_printf.c \
-		read_flag.c \
-		print_res_func.c \
-		set_flag_func.c \
-		cast_func.c \
-		solve_func.c 
+		read_flags.c \
+		generate_res_func.c \
+		print_res_func_1.c \
+		print_res_func_2.c \
+		set_flag_func_1.c \
+		set_flag_func_2.c \
+		set_flag_func_3.c \
+		read_n_cast_1.c \
+		read_n_cast_2.c \
+		width_prec_func.c \
+		additional_func.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
@@ -53,28 +59,31 @@ HEADER_FLAGS := -I $(INC_DIR) -I $(LIBFT_INC)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-		ar rc $(NAME) $(OBJ) libft/obj/*.o
-		ranlib $(NAME)
+		@ ar rc $(NAME) $(OBJ) libft/obj/standard_func/*.o \
+							libft/obj/non_standard_func/*.o \
+							libft/obj/lst_func/*.o \
+							libft/obj/aditional_func/*.o
+		@ ranlib $(NAME)
 
 $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
-		mkdir $(OBJ_DIR)
+		@ mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o: %.c
-		gcc -c $< -o $@ $(FLAGS) $(HEADER_FLAGS)
+		@ gcc -c $< -o $@ $(FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):
-		make -C $(LIB_DIR)
+		@ make -C $(LIB_DIR)
 
 clean:
-		rm -f $(OBJ)
-		make clean -C $(LIB_DIR)
+		@ rm -f $(OBJ)
+		@ make clean -C $(LIB_DIR)
 
 fclean: clean
-		rm -f $(NAME)
-		make fclean -C $(LIB_DIR)
-		rm -rf $(OBJ_DIR)
+		@ rm -f $(NAME)
+		@ make fclean -C $(LIB_DIR)
+		@ rm -rf $(OBJ_DIR)
 
 re: fclean all
 

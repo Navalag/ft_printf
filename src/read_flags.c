@@ -12,25 +12,6 @@
 
 #include "../inc/ft_printf.h"
 
-void	clean_flags_struct()
-{
-	g_head->flag_hesh = 0;
-	g_head->flag_minus = 0;
-	g_head->flag_plus = 0;
-	g_head->flag_zero = 0;
-	g_head->flag_space = 0;
-	g_head->width = 0;
-	g_head->precision = 0;
-	g_head->precision_flag = 0;
-	g_head->size_hh = 0;
-	g_head->size_h = 0;
-	g_head->size_ll = 0;
-	g_head->size_l = 0;
-	g_head->size_j = 0;
-	g_head->size_z = 0;
-	g_head->conver_letter = 0;
-}
-
 int		read_flags_from_format(char *frm)
 {
 	t_flags		*tmp;
@@ -97,7 +78,7 @@ int		continue_with_precision(char *frm, int count)
 }
 
 /*
-** Check and fix sizes later (if h and hh both will be used) 
+** Check and fix sizes later (if h and hh both will be used)
 */
 
 int		continue_with_size(char *frm, int count)
@@ -147,13 +128,7 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_s_conversion(ap);
 	else if (*frm == 'C' || (*frm == 'c' && g_head->size_l == 1))
 		res_count = print_C_conversion(ap);
-	else if (*frm == 'c' || *frm == '%')
+	else if (*frm == 'c' || *frm != '\0')
 		res_count = print_c_conversion(ap);
-	else if (*frm)
-	{
-		ft_putchar(*frm); // must be changed later
-		free(g_head);
-		res_count++;
-	}
 	return (res_count);
 }

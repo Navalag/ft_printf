@@ -51,34 +51,8 @@ char	*cast_u_U_o_O_x_X_size(va_list ap, int base, int up_case)
 	else if (g_head->size_hh == 1)
 		return (ft_itoa_base_u((unsigned char)va_arg(ap, int), base, up_case));
 	else if (g_head->size_h == 1)
-		return (ft_itoa_base_u((unsigned short)va_arg(ap, int), base, up_case));
+		return (ft_itoa_base_u((unsigned short)va_arg(ap, int),
+															base, up_case));
 	else
 		return (ft_itoa_base_u(va_arg(ap, unsigned int), base, up_case));
-}
-
-char	*cast_s_size(va_list ap)
-{
-	char	*res;
-
-	res = va_arg(ap, char *);
-	if (res == NULL)
-		res = ft_strdup("(null)");
-	else
-		res = ft_strdup(res);
-	return (res);
-}
-
-wchar_t	*cast_S_size(va_list ap)
-{
-	return (va_arg(ap, wchar_t *));
-}
-
-char	cast_c_size(va_list ap)
-{
-	return ((unsigned char)va_arg(ap, int));
-}
-
-wchar_t	cast_C_size(va_list ap)
-{
-	return (va_arg(ap, wchar_t));
 }
