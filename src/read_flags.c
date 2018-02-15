@@ -130,5 +130,7 @@ int		continue_with_conversions(char *frm, va_list ap)
 		res_count = print_utf_c_conversion(ap);
 	else if (*frm == 'c' || *frm != '\0')
 		res_count = print_c_conversion(ap);
+	if (!*frm)
+		free(g_printf);
 	return (res_count);
 }
