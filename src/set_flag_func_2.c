@@ -6,7 +6,7 @@
 /*   By: agalavan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 11:02:27 by agalavan          #+#    #+#             */
-/*   Updated: 2018/02/14 11:02:30 by agalavan         ###   ########.fr       */
+/*   Updated: 2018/02/15 12:01:38 by agalavan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,50 +36,6 @@ char	*set_hesh_flag_for_octal(char *res)
 char	*set_hesh_flag_for_hexadecimal_x(char *res)
 {
 	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (res[i] == ' ' || (g_head->flag_zero == 1 && res[i] == '0'))
-		i++;
-	if (i >= 2)
-	{
-		while (res[i - 1] == '0' && i > 0)
-			i--;
-		/* this condition works for 'space' cases. When we put 0x close
-		   to the number. */
-		if (i >= 2)
-		{
-			res[i - 1] = 'x';
-			res[i - 2] = '0';
-		}
-		/* this condition works for 'zero' cases. Before it
-		   while loop would always return 'i' at the beginning of the string */
-		else
-		{
-			res[i + 1] = 'x';
-			res[i] = '0';
-		}
-	}
-	else if (i == 1)
-	{
-		res[0] = 'x';
-		tmp = ft_strjoin("0", res);
-		free(res);
-		res = tmp;
-	}
-	else
-	{
-		tmp = ft_strjoin("0x", res);
-		free(res);
-		res = tmp;
-	}
-	return (res);
-}
-
-char	*set_hesh_flag_for_hexadecimal_X(char *res)
-{
-	int		i;
-	char	*tmp;
 
 	i = 0;
 	while (res[i] == ' ' || (g_head->flag_zero == 1 && res[i] == '0'))
@@ -90,25 +46,36 @@ char	*set_hesh_flag_for_hexadecimal_X(char *res)
 			i--;
 		if (i >= 1)
 		{
-			res[i - 1] = 'X';
+			res[i - 1] = (g_head->conver_letter == 'X') ? 'X' : 'x';
 			res[i - 2] = '0';
 		}
 		else
 		{
-			res[i + 1] = 'X';
+			res[i + 1] = (g_head->conver_letter == 'X') ? 'X' : 'x';
 			res[i] = '0';
 		}
 	}
-	else if (i == 1)
+	else
+		res = continue_with_hesh_flag(res, i);
+	return (res);
+}
+
+char	*continue_with_hesh_flag(char *res, int i)
+{
+	char	*prefix;
+	char	*tmp;
+
+	prefix = (g_head->conver_letter == 'X') ? "0X" : "0x";
+	if (i == 1)
 	{
-		res[0] = 'X';
+		res[0] = (g_head->conver_letter == 'X') ? 'X' : 'x';
 		tmp = ft_strjoin("0", res);
 		free(res);
 		res = tmp;
 	}
 	else
 	{
-		tmp = ft_strjoin("0X", res);
+		tmp = ft_strjoin(prefix, res);
 		free(res);
 		res = tmp;
 	}

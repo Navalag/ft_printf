@@ -111,7 +111,8 @@ char		*set_zero_flag_for_s(char *res);
 
 char		*set_hesh_flag_for_octal(char *res);
 char		*set_hesh_flag_for_hexadecimal_x(char *res);
-char		*set_hesh_flag_for_hexadecimal_X(char *res);
+char		*continue_with_hesh_flag(char *res, int i);
+// char		*set_hesh_flag_for_hexadecimal_X(char *res);
 
 /*
 ** additional functions
