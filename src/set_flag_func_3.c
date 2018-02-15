@@ -12,8 +12,6 @@
 
 #include "../inc/ft_printf.h"
 
-/* check if value can be with "+" sign */
-
 char	*set_plus_flag(char *res)
 {
 	int		i;
@@ -63,14 +61,12 @@ char	*set_minus_flag(char *res)
 	i = 0;
 	while (res[i] == ' ')
 		i++;
-	if (g_head->flag_space == 1 && res[i] != '-' && res[i] != '+')
+	if (g_printf->flag_space == 1 && res[i] != '-' && res[i] != '+')
 		i--;
 	res = ft_memmove(res, res + i, ft_strlen(res) - i);
 	ft_memset(res + (ft_strlen(res) - i), ' ', i);
 	return (res);
 }
-
-/* fix cases with '+' '-' sign */
 
 char	*set_zero_flag(char *res)
 {
@@ -80,8 +76,8 @@ char	*set_zero_flag(char *res)
 	i = 0;
 	if (res[i] != ' ')
 		return (res);
-	else if ((tmp = ft_strchr(res, '-')) == NULL && g_head->flag_space == 1 &&
-			g_head->flag_plus == 0)
+	else if ((tmp = ft_strchr(res, '-')) == NULL && g_printf->flag_space == 1
+			&& g_printf->flag_plus == 0)
 		i++;
 	else if ((tmp = ft_strchr(res, '-')) != NULL ||
 			(tmp = ft_strchr(res, '+')) != NULL)

@@ -127,6 +127,22 @@ int		main(void)
 	   ret_2 = printf("|%#10x|\n", 0);
 	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
 
+	ret_1 = ft_printf("|%#010X|\n", 123);
+	   ret_2 = printf("|%#010X|\n", 123);
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("|%#10x|\n", 123);
+	   ret_2 = printf("|%#10x|\n", 123);
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("|%#10p|\n", ret_1);
+	   ret_2 = printf("|%#10p|\n", ret_1);
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
+	ret_1 = ft_printf("|%10p|\n", ret_1);
+	   ret_2 = printf("|%10p|\n", ret_1);
+	printf("\nret_1 = %i\nret_2 = %i\n", ret_1, ret_2);
+
 // #include <string.h>
 
 // int main(void)

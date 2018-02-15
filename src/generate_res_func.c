@@ -12,21 +12,16 @@
 
 #include "../inc/ft_printf.h"
 
-char	*generate_res_for_int(char *width, char *value)
+char	*generate_res_for_int(char *width, char *value, int i)
 {
 	char	*res;
 	int		width_len;
 	int		value_len;
-	int		i;
 
 	width_len = ft_strlen(width);
 	value_len = ft_strlen(value);
-	i = 0;
 	if (width_len <= value_len)
-	{
-		res = value;
-		free(width);
-	}
+		res = ft_strdup(value);
 	else
 	{
 		while (value_len && value[value_len - 1] != '-')
@@ -36,19 +31,12 @@ char	*generate_res_for_int(char *width, char *value)
 		if (width[i] == ' ' && value[0] == '-')
 		{
 			width[i] = '-';
-			res = width;
+			res = ft_strdup(width);
 		}
 		else if (width[i] != ' ' && value[0] == '-')
-		{
 			res = ft_strjoin("-", width);
-			free(value);
-			free(width);
-		}
 		else
-		{
-			res = width;
-			free(value);
-		}
+			res = ft_strdup(width);
 	}
 	return (res);
 }
@@ -63,32 +51,20 @@ char	*generate_res_for_str(char *width, char *value)
 	width_len = ft_strlen(width);
 	value_len = ft_strlen(value);
 	i = 0;
-	if (width_len <= value_len && g_head->precision >= value_len
-		&& g_head->precision_flag)
-	{
-		res = value;
-		free(width);
-	}
-	else if (g_head->precision < value_len && g_head->precision > width_len)
-	{
-		res = ft_strsub(value, 0, g_head->precision);
-		free(value);
-		free(width);
-	}
+	if (width_len <= value_len && g_printf->precision >= value_len)
+		res = ft_strdup(value);
+	else if (g_printf->precision < value_len && g_printf->precision > width_len)
+		res = ft_strsub(value, 0, g_printf->precision);
 	else
 	{
-		while (width_len > value_len || 
-			(g_head->precision_flag && width_len > g_head->precision))
-		{
+		while (((g_printf->precision_flag && width_len > g_printf->precision)
+				|| width_len > value_len) && (width_len--))
 			i++;
-			width_len--;
-		}
-		if (g_head->precision_flag == 1)
-			ft_strncpy(width + i, value, g_head->precision);
+		if (g_printf->precision_flag == 1)
+			ft_strncpy(width + i, value, g_printf->precision);
 		else
 			ft_strcpy(width + i, value);
-		res = width;
-		free(value);
+		res = ft_strdup(width);
 	}
 	return (res);
 }
@@ -105,7 +81,7 @@ int		generate_and_print_utf_str(char *width, wchar_t *value)
 	if (width_len <= value_len)
 		while (*value)
 			ft_print_utf((unsigned int)*value++);
-	else if (g_head->flag_minus == 1)
+	else if (g_printf->flag_minus == 1)
 	{
 		while (*value)
 			ft_print_utf((unsigned int)*value++);
@@ -131,7 +107,7 @@ int		generate_and_print_utf_char(char *width, wchar_t value)
 	value_len = ft_utf_charlen(value);
 	if (width_len <= value_len)
 		ft_print_utf((unsigned int)value);
-	else if (g_head->flag_minus == 1)
+	else if (g_printf->flag_minus == 1)
 	{
 		ft_print_utf((unsigned int)value);
 		while (width_len-- > value_len)

@@ -20,21 +20,21 @@ int		read_flags_from_format(char *frm)
 
 	all_flags = "#0-+ ";
 	tmp = (t_flags *)malloc(sizeof(tmp));
-	g_head = tmp;
+	g_printf = tmp;
 	count = 0;
 	clean_flags_struct();
 	while (*frm && ft_strchr(all_flags, *frm) != 0)
 	{
 		if (*frm == '#')
-			g_head->flag_hesh = 1;
+			g_printf->flag_hesh = 1;
 		else if (*frm == '-')
-			g_head->flag_minus = 1;
+			g_printf->flag_minus = 1;
 		else if (*frm == '+')
-			g_head->flag_plus = 1;
+			g_printf->flag_plus = 1;
 		else if (*frm == '0')
-			g_head->flag_zero = 1;
+			g_printf->flag_zero = 1;
 		else if (*frm == ' ')
-			g_head->flag_space = 1;
+			g_printf->flag_space = 1;
 		frm++;
 		count++;
 	}
@@ -52,7 +52,7 @@ int		continue_with_width(char *frm, int count)
 		frm++;
 		count++;
 	}
-	g_head->width = res;
+	g_printf->width = res;
 	return (continue_with_precision(frm, count));
 }
 
@@ -65,7 +65,7 @@ int		continue_with_precision(char *frm, int count)
 	{
 		frm++;
 		count++;
-		g_head->precision_flag = 1;
+		g_printf->precision_flag = 1;
 		while (*frm >= '0' && *frm <= '9')
 		{
 			res = res * 10 + *frm - '0';
@@ -73,7 +73,7 @@ int		continue_with_precision(char *frm, int count)
 			count++;
 		}
 	}
-	g_head->precision = res;
+	g_printf->precision = res;
 	return (continue_with_size(frm, count));
 }
 
@@ -89,17 +89,17 @@ int		continue_with_size(char *frm, int count)
 	while (*frm && ft_strchr(all_sizes, *frm) != 0)
 	{
 		if (*frm == 'h' && *(frm + 1) == 'h')
-			g_head->size_hh = 1;
+			g_printf->size_hh = 1;
 		else if (*frm == 'h' && *(frm + 1) != 'h')
-			g_head->size_h = 1;
+			g_printf->size_h = 1;
 		else if (*frm == 'l' && *(frm + 1) == 'l')
-			g_head->size_ll = 1;
+			g_printf->size_ll = 1;
 		else if (*frm == 'l' && *(frm + 1) != 'l')
-			g_head->size_l = 1;
+			g_printf->size_l = 1;
 		else if (*frm == 'j')
-			g_head->size_j = 1;
+			g_printf->size_j = 1;
 		else if (*frm == 'z')
-			g_head->size_z = 1;
+			g_printf->size_z = 1;
 		frm++;
 		count++;
 	}
@@ -111,23 +111,23 @@ int		continue_with_conversions(char *frm, va_list ap)
 	int		res_count;
 
 	res_count = 0;
-	g_head->conver_letter = *frm;
+	g_printf->conver_letter = *frm;
 	if (*frm == 'd' || *frm == 'i' || *frm == 'D')
-		res_count = print_D_d_i_conversions(ap);
+		res_count = print_d_i_conversions(ap);
 	else if (*frm == 'u' || *frm == 'U')
-		res_count = print_u_U_o_O_x_X_conversion(ap, 10, 0);
+		res_count = print_u_o_x_p_conversion(ap, 10, 0);
 	else if (*frm == 'o' || *frm == 'O')
-		res_count = print_u_U_o_O_x_X_conversion(ap, 8, 0);
+		res_count = print_u_o_x_p_conversion(ap, 8, 0);
 	else if (*frm == 'x' || *frm == 'p')
-		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 0);
+		res_count = print_u_o_x_p_conversion(ap, 16, 0);
 	else if (*frm == 'X')
-		res_count = print_u_U_o_O_x_X_conversion(ap, 16, 1);
-	else if (*frm == 'S' || (*frm == 's' && g_head->size_l == 1))
-		res_count = print_S_conversion(ap);
+		res_count = print_u_o_x_p_conversion(ap, 16, 1);
+	else if (*frm == 'S' || (*frm == 's' && g_printf->size_l == 1))
+		res_count = print_utf_s_conversion(ap);
 	else if (*frm == 's')
 		res_count = print_s_conversion(ap);
-	else if (*frm == 'C' || (*frm == 'c' && g_head->size_l == 1))
-		res_count = print_C_conversion(ap);
+	else if (*frm == 'C' || (*frm == 'c' && g_printf->size_l == 1))
+		res_count = print_utf_c_conversion(ap);
 	else if (*frm == 'c' || *frm != '\0')
 		res_count = print_c_conversion(ap);
 	return (res_count);

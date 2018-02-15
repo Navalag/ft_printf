@@ -6,7 +6,7 @@
 /*   By: agalavan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 11:02:27 by agalavan          #+#    #+#             */
-/*   Updated: 2018/02/15 12:01:38 by agalavan         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:02:30 by agalavan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ char	*set_hesh_flag_for_octal(char *res)
 	return (res);
 }
 
-char	*set_hesh_flag_for_hexadecimal_x(char *res)
+char	*set_hesh_flag_for_hexadecimal(char *res)
 {
 	int		i;
 
 	i = 0;
-	while (res[i] == ' ' || (g_head->flag_zero == 1 && res[i] == '0'))
+	while (res[i] == ' ' || (g_printf->flag_zero == 1 && res[i] == '0'))
 		i++;
 	if (i >= 2)
 	{
@@ -46,12 +46,12 @@ char	*set_hesh_flag_for_hexadecimal_x(char *res)
 			i--;
 		if (i >= 1)
 		{
-			res[i - 1] = (g_head->conver_letter == 'X') ? 'X' : 'x';
+			res[i - 1] = (g_printf->conver_letter == 'X') ? 'X' : 'x';
 			res[i - 2] = '0';
 		}
 		else
 		{
-			res[i + 1] = (g_head->conver_letter == 'X') ? 'X' : 'x';
+			res[i + 1] = (g_printf->conver_letter == 'X') ? 'X' : 'x';
 			res[i] = '0';
 		}
 	}
@@ -65,10 +65,10 @@ char	*continue_with_hesh_flag(char *res, int i)
 	char	*prefix;
 	char	*tmp;
 
-	prefix = (g_head->conver_letter == 'X') ? "0X" : "0x";
+	prefix = (g_printf->conver_letter == 'X') ? "0X" : "0x";
 	if (i == 1)
 	{
-		res[0] = (g_head->conver_letter == 'X') ? 'X' : 'x';
+		res[0] = (g_printf->conver_letter == 'X') ? 'X' : 'x';
 		tmp = ft_strjoin("0", res);
 		free(res);
 		res = tmp;

@@ -12,7 +12,7 @@
 
 #include "../inc/ft_printf.h"
 
-int		print_D_d_i_conversions(va_list ap)
+int		print_d_i_conversions(va_list ap)
 {
 	char	*width;
 	char	*value;
@@ -20,18 +20,20 @@ int		print_D_d_i_conversions(va_list ap)
 	int		res_len;
 
 	width = set_width(1);
-	value = cast_D_d_i_size(ap);
-	if (value[0] == '0' && g_head->precision_flag == 1
-			&& g_head->precision == 0)
+	value = cast_d_i_size(ap);
+	if (value[0] == '0' && g_printf->precision_flag == 1
+			&& g_printf->precision == 0)
 		value[0] = '\0';
-	res = set_flag_for_d_i_u(generate_res_for_int(width, value));
+	res = set_flag_for_d_i_u(generate_res_for_int(width, value, 0));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	free(width);
+	free(value);
 	clean_memory_leaks(res);
 	return (res_len);
 }
 
-int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
+int		print_u_o_x_p_conversion(va_list ap, int base, int up_case)
 {
 	char	*width;
 	char	*value;
@@ -39,19 +41,19 @@ int		print_u_U_o_O_x_X_conversion(va_list ap, int base, int up_case)
 	int		res_len;
 
 	width = set_width(1);
-	value = cast_u_U_o_O_x_X_size(ap, base, up_case);
-	if (value[0] == '0' && g_head->conver_letter != 'p')
+	value = cast_u_o_x_p_size(ap, base, up_case);
+	if (value[0] == '0' && g_printf->conver_letter != 'p')
 	{
-		if (g_head->precision_flag == 1 && g_head->precision == 0)
+		if (g_printf->precision_flag == 1 && g_printf->precision == 0)
 			value[0] = '\0';
-		if (g_head->conver_letter == 'x' || g_head->conver_letter == 'X')
-			g_head->flag_hesh = 0;
+		if (g_printf->conver_letter == 'x' || g_printf->conver_letter == 'X')
+			g_printf->flag_hesh = 0;
 	}
-	res = set_flag_for_o_x_X(generate_res_for_int(width, value));
+	res = set_flag_for_o_x_p(generate_res_for_int(width, value, 0));
 	res_len = ft_strlen(res);
 	ft_putstr(res);
+	free(width);
+	free(value);
 	clean_memory_leaks(res);
 	return (res_len);
 }
-
-

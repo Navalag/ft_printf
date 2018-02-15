@@ -14,21 +14,21 @@
 
 void	clean_flags_struct(void)
 {
-	g_head->flag_hesh = 0;
-	g_head->flag_minus = 0;
-	g_head->flag_plus = 0;
-	g_head->flag_zero = 0;
-	g_head->flag_space = 0;
-	g_head->width = 0;
-	g_head->precision = 0;
-	g_head->precision_flag = 0;
-	g_head->size_hh = 0;
-	g_head->size_h = 0;
-	g_head->size_ll = 0;
-	g_head->size_l = 0;
-	g_head->size_j = 0;
-	g_head->size_z = 0;
-	g_head->conver_letter = 0;
+	g_printf->flag_hesh = 0;
+	g_printf->flag_minus = 0;
+	g_printf->flag_plus = 0;
+	g_printf->flag_zero = 0;
+	g_printf->flag_space = 0;
+	g_printf->width = 0;
+	g_printf->precision = 0;
+	g_printf->precision_flag = 0;
+	g_printf->size_hh = 0;
+	g_printf->size_h = 0;
+	g_printf->size_ll = 0;
+	g_printf->size_l = 0;
+	g_printf->size_j = 0;
+	g_printf->size_z = 0;
+	g_printf->conver_letter = 0;
 }
 
 int		ft_utf_charlen(wchar_t value)
@@ -65,6 +65,6 @@ int		ft_utf_strlen(wchar_t *value)
 
 void	clean_memory_leaks(char *res)
 {
-	free(g_head);
+	free(g_printf);
 	free(res);
 }
