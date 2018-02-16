@@ -27,8 +27,6 @@ char	*set_flag_for_d_i_u(char *res)
 		}
 		else if (g_printf->flag_zero == 1 && g_printf->precision_flag == 0)
 			res = set_zero_flag(res);
-		else
-			g_printf->flag_zero = 0;
 	}
 	return (res);
 }

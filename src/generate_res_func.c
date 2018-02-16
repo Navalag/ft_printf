@@ -46,26 +46,15 @@ char	*generate_res_for_str(char *width, char *value)
 	char	*res;
 	int		width_len;
 	int		value_len;
-	int		i;
 
+	if (g_printf->precision_flag == 1)
+		value[g_printf->precision] = '\0';
 	width_len = ft_strlen(width);
 	value_len = ft_strlen(value);
-	i = 0;
-	if (width_len <= value_len && g_printf->precision >= value_len)
-		res = ft_strdup(value);
-	else if (g_printf->precision < value_len && g_printf->precision > width_len)
-		res = ft_strsub(value, 0, g_printf->precision);
+	if (width_len > value_len)
+		res = ft_strjoin(width + value_len, value);
 	else
-	{
-		while (((g_printf->precision_flag && width_len > g_printf->precision)
-				|| width_len > value_len) && (width_len--))
-			i++;
-		if (g_printf->precision_flag == 1)
-			ft_strncpy(width + i, value, g_printf->precision);
-		else
-			ft_strcpy(width + i, value);
-		res = ft_strdup(width);
-	}
+		res = ft_strdup(value);
 	return (res);
 }
 
