@@ -20,7 +20,7 @@ char	*generate_res_for_int(char *width, char *value, int i)
 
 	width_len = ft_strlen(width);
 	value_len = ft_strlen(value);
-	if (width_len <= value_len)
+	if (width_len <= ((value[0] == '-') ? value_len - 1 : value_len))
 		res = ft_strdup(value);
 	else
 	{

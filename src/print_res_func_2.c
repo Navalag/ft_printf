@@ -42,7 +42,7 @@ int		print_u_o_x_p_conversion(va_list ap, int base, int up_case)
 
 	width = set_width(1);
 	value = cast_u_o_x_p_size(ap, base, up_case);
-	if (value[0] == '0' && g_printf->conver_letter != 'p')
+	if (value[0] == '0')
 	{
 		if (g_printf->precision_flag == 1 && g_printf->precision == 0)
 			value[0] = '\0';

@@ -33,10 +33,16 @@ char	*set_flag_for_d_i_u(char *res)
 
 char	*set_flag_for_o_x_p(char *res)
 {
+	if (g_printf->conver_letter == 'u' || g_printf->conver_letter == 'u')
+		return (set_flag_for_d_i_u(res));
 	if (g_printf->width > 0)
+	{
 		if (g_printf->flag_zero == 1 && g_printf->precision_flag == 0
 			&& g_printf->flag_minus == 0)
 			res = set_zero_flag(res);
+		else
+			g_printf->flag_zero = 0;
+	}
 	if (g_printf->flag_hesh == 1 && (g_printf->conver_letter == 'o' ||
 		g_printf->conver_letter == 'O'))
 		res = set_hesh_flag_for_octal(res);
