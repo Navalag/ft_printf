@@ -14,6 +14,11 @@
 
 char	*set_flag_for_d_i_u(char *res)
 {
+	if (g_printf->conver_letter == 'u' || g_printf->conver_letter == 'U')
+	{
+		g_printf->flag_plus = 0;
+		g_printf->flag_space = 0;
+	}
 	if (g_printf->flag_plus == 1)
 		res = set_plus_flag(res);
 	else if (g_printf->flag_space == 1)
@@ -33,7 +38,7 @@ char	*set_flag_for_d_i_u(char *res)
 
 char	*set_flag_for_o_x_p(char *res)
 {
-	if (g_printf->conver_letter == 'u' || g_printf->conver_letter == 'u')
+	if (g_printf->conver_letter == 'u' || g_printf->conver_letter == 'U')
 		return (set_flag_for_d_i_u(res));
 	if (g_printf->width > 0)
 	{
