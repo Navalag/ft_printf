@@ -74,6 +74,13 @@ int		print_utf_c_conversion(va_list ap)
 
 	width = set_width(0);
 	value = cast_utf_c_size(ap);
+	if (MB_CUR_MAX == 1)
+	{
+		if (value > 255)
+			return (-1);
+		write(1, &value, 1);
+		return (0);
+	}
 	res_len = generate_and_print_utf_char(width, value);
 	clean_memory_leaks(width);
 	return (res_len);
