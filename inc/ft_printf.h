@@ -13,12 +13,10 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
 # include <wchar.h>
-# include <locale.h>
 # include "../libft/inc/libft.h"
 
 typedef struct	s_fl

@@ -77,10 +77,6 @@ int		continue_with_precision(char *frm, int count)
 	return (continue_with_size(frm, count));
 }
 
-/*
-** Check and fix sizes later (if h and hh both will be used)
-*/
-
 int		continue_with_size(char *frm, int count)
 {
 	char	*all_sizes;
