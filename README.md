@@ -9,7 +9,7 @@ is a vital function.
 
 You can find more information about printf family of functions reading it's man (type in console: man 3 printf).
 
-## DESCRIPTION OF THIS IMPLEMENTATION
+## DESCRIPTION OF THIS IMPLEMENTATION:
 
 The aim of this project is to write a well-structured and easily expandable code.
 
@@ -24,3 +24,33 @@ You can find more information in article "Secrets of “printf”" at the root o
 
 Bellow is the scheme with structure of my implementation:
 <img src="screenshots/fr_printf_scheme.png" width="800">
+
+## HOW TO LAUNCH AND TEST:
+
+First clone git repository (type in console):
+```
+
+git clone https://github.com/Navalag/ft_printf.git ft_printf
+
+```
+
+Than go to the project folder and launch:
+```
+
+cd ft_printf
+
+make
+
+```
+
+Than you can test it with your code or use /test_files:
+```
+
+gcc test_files/main.c libftprintf.a && ./a.out
+
+```
+
+## HOW TO CONTACT ME:
+
+If you found mistake || bug || have any questions || suggestions, please feel free to contact me at
+agalavan@student.unit.ua
