@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
-// #include <locale.h>
-// #include <wchar.h>
-#include "inc/ft_printf.h"
+#include <stdio.h>
+#include <locale.h>
+#include <wchar.h>
+#include "../inc/ft_printf.h"
 
 int		main(void)
 {

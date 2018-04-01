@@ -32,17 +32,17 @@
 #define TITLE(...){printf("\033[1m\n");printf(__VA_ARGS__);printf("\n\033[0m");}
 
 //Include your printf here!
-#include "inc/ft_printf.h"
+#include "../inc/ft_printf.h"
 
 //Test switchers - comment some of then to turn the tests off
 #define	CHAR		//aka chars
-#define	PER			//aka percent(%)
-#define	NUM			//aka numbers
-#define	PTR			//aka pointers
-#define	STRANGE		//aka undefined tests
-#define STR			//aka strings
-#define WSTR		//aka wide strings
-#define	LENGTH		//aka hh, h, l ,ll , z, j
+// #define	PER			//aka percent(%)
+// #define	NUM			//aka numbers
+// #define	PTR			//aka pointers
+// #define	STRANGE		//aka undefined tests
+// #define STR			//aka strings
+// #define WSTR		//aka wide strings
+// #define	LENGTH		//aka hh, h, l ,ll , z, j
 
 int	main(void)
 {
@@ -611,6 +611,6 @@ int	main(void)
 #ifdef LEAKS
 	while (1) sleep(120);
 #endif
-	system("leaks print");
+	// system("leaks print");
 	return (0);
 }
