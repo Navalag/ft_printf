@@ -23,7 +23,7 @@ Ft_printf manages 5 groups of data:
 You can find more information in article "Secrets of “printf”" at the root of repository and also read **man**.
 
 Bellow is the scheme with structure of my implementation:
-<img src="screenshots/fr_printf_scheme.png" width="800">
+<img src="screenshots/ft_printf_scheme.png" width="800">
 
 ## HOW TO LAUNCH AND TEST:
 
