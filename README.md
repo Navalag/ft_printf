@@ -9,7 +9,7 @@ is a vital function.
 
 You can find more information about printf family of functions reading it's man (type in console: man 3 printf).
 
-## DESCRIPTION OF THIS IMPLEMENTATION:
+## DESCRIPTION OF MY IMPLEMENTATION:
 
 The aim of this project is to write a well-structured and easily expandable code.
 
