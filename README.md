@@ -14,7 +14,7 @@ You can find more information about printf family of functions reading it's man 
 The aim of this project is to write a well-structured and easily expandable code.
 
 Ft_printf manages 5 groups of data:
-1) flags - "+", "0", "-", "+" and "space";
+1) flags - "+", "0", "-" and "space";
 2) minimum field width - number that sets the output width, e.g. "10".
 3) precision - always start with ".", e.g. ".5";
 4) size flags - "h", "hh", "l", "ll", "j", "z".
